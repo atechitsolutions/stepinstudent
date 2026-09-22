@@ -21,5 +21,4 @@ export default function BackToTop()  {
         18
     }
     />
-</button>;
-}
+</button>;}
