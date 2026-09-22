@@ -17,6 +17,11 @@ export default function Footer()  {
     >
 <span>A</span>-TECH</button>
 <p>Technology solutions built around your business.</p>
+<p className="footer-description">
+    We design and build modern websites, web applications,
+    mobile apps and custom software that help businesses
+    grow, automate and scale.
+  </p>
 </div>
 <div>
 <h4>Company</h4> {
@@ -34,7 +39,7 @@ export default function Footer()  {
     </div>
 <div>
 <h4>Services</h4> {
-        ['Web Development', 'E-Commerce', 'CRM', 'Custom Software', 'Mobile Apps', 'Digital Marketing'].map(x => <button key= {
+        ['Web Development', 'E-Commerce', 'CRM', 'Custom Software', 'Mobile Apps', 'Digital Marketing','Lead Generation','AI Consulting'].map(x => <button key= {
             x
         }
         > {
@@ -45,8 +50,8 @@ export default function Footer()  {
     </div>
 <div>
 <h4>Contact</h4>
-<span>Email placeholder</span>
-<span>Phone placeholder</span>
+<span>ashasvitech@gmail.com</span>
+<span>+919772733319</span>
 <span>India</span>
 </div>
 </div>

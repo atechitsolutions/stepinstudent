@@ -1,3 +1,4 @@
+import FloatingContact from './components/FloatingContact';
 import  {
     useState
 }
@@ -109,6 +110,7 @@ export default function App()  {
 </Reveal>
 </main>
 <Footer />
+<FloatingContact />
 <BackToTop />
 </MotionConfig>;
 }

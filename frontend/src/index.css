@@ -1,17 +1,30 @@
 :root {
-  --primary:#0B1020;
-  --accent:#2563EB;
-  --background:#fff;
-  --background-secondary:#F8FAFC;
-  --text:#111827;
-  --text-secondary:#667085;
-  --border:#E5E7EB;
-  --radius:20px;
-  font-family:'Manrope',Inter,system-ui,sans-serif;
-  color:var(--text);
-  background:#fff;
-  font-synthesis:none;
-  text-rendering:optimizeLegibility
+  --primary: #24112F;
+  --primary-light: #3A1D49;
+
+  --accent: #EC4899;
+  --accent-hover: #DB2777;
+  --accent-purple: #7C3AED;
+  --accent-pink-light: #FCE7F3;
+  --accent-purple-light: #F3E8FF;
+
+  --background: #FFFBFE;
+  --background-secondary: #F7F3F8;
+  --surface: #FFFFFF;
+
+  --text: #241F27;
+  --text-secondary: #6B6070;
+  --border: #E5DCE8;
+
+  --radius: 20px;
+
+  font-family: 'Manrope', Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: var(--text);
+  background: var(--background);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 * {
   box-sizing:border-box
@@ -73,7 +86,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
 }
 
 .brand span {
-  color:#7aa2ff
+  color:#F0A6FF
 }
 .desktop-nav {
     position: absolute;
@@ -132,7 +145,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
 .hero {
   min-height:760px;
   padding-top:170px;
-  background:radial-gradient(circle at 80% 20%,rgba(37,99,235,.18),transparent 34%),#0B1020;
+  background:radial-gradient(circle at 80% 20%,rgba(37,99,235,.18),transparent 34%),#24112F;
   color:#fff;
   overflow:hidden
 }
@@ -146,7 +159,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
   font-size:11px;
   letter-spacing:.16em;
   font-weight:800;
-  color:#9bb8ff;
+  color:#F5B7FF;
   display:flex;
   align-items:center;
   gap:8px
@@ -169,11 +182,11 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
 }
 .hero h1 em {
   font-style:normal;
-  color:#8db0ff
+  color:#FFB4E6
 }
 .hero-copy p {
   max-width:640px;
-  color:#b9c1d0;
+  color:#E9DFF0;
   font-size:18px;
   line-height:1.75
 }
@@ -204,7 +217,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
 }
 .btn-primary:hover:not(:disabled) {
   transform:translateY(-2px);
-  background:#1d56d3
+  background:#DB2777
 }
 .btn-secondary {
   background:#fff;
@@ -224,7 +237,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
   padding:20px 0 40px
 }
 .browser {
-  background:#10182c;
+  background:#24172F;
   border:1px solid rgba(255,255,255,.13);
   border-radius:18px;
   overflow:hidden;
@@ -243,11 +256,11 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
   width:7px;
   height:7px;
   border-radius:50%;
-  background:#566174
+  background:#8E7899
 }
 .browser-top small {
   margin-left:12px;
-  color:#768199;
+  color:#A994B2;
   font-size:10px
 }
 .mock-layout {
@@ -265,7 +278,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
 }
 .mock-layout aside b {
   font-size:16px;
-  color:#8db0ff
+  color:#FFB4E6
 }
 .mock-layout aside i {
   width:15px;
@@ -283,7 +296,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
 }
 .mock-head small {
   display:block;
-  color:#6d7890;
+  color:#A58EAE;
   font-size:9px;
   letter-spacing:.12em
 }
@@ -294,7 +307,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
 }
 .status {
   font-size:9px;
-  color:#7ce3a8;
+  color:#86EFAC;
   border:1px solid rgba(124,227,168,.2);
   padding:7px 10px;
   border-radius:999px;
@@ -307,13 +320,13 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
   margin:24px 0
 }
 .mock-cards>div {
-  background:#151f36;
+  background:#30203D;
   border:1px solid rgba(255,255,255,.07);
   padding:17px;
   border-radius:12px
 }
 .mock-cards small {
-  color:#738098;
+  color:#A18AAE;
   font-size:9px
 }
 .mock-cards strong {
@@ -322,23 +335,23 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
   margin:7px 0
 }
 .mock-cards span {
-  color:#6f7b91;
+  color:#9B86A7;
   font-size:9px
 }
 .mock-chart {
   border:1px solid rgba(255,255,255,.07);
   border-radius:12px;
   padding:17px;
-  background:#121b30
+  background:#2A1B36
 }
 .chart-title {
   display:flex;
   justify-content:space-between;
-  color:#8994aa;
+  color:#B9A5C2;
   font-size:10px
 }
 .chart-title b {
-  color:#78dca5
+  color:#86EFAC
 }
 .chart {
   height:120px;
@@ -349,7 +362,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
 }
 .chart i {
   flex:1;
-  background:linear-gradient(180deg,#4d80ff,rgba(77,128,255,.15));
+  background:linear-gradient(180deg,#EC4899,rgba(77,128,255,.15));
   border-radius:5px 5px 0 0
 }
 .chart i:nth-child(1) {
@@ -393,7 +406,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
   padding:8px 10px;
   border-radius:9px;
   background:#fff;
-  color:#273247;
+  color:#3E3346;
   font-size:10px;
   font-weight:800;
   box-shadow:0 10px 25px rgba(0,0,0,.16)
@@ -408,10 +421,10 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
   border-radius:50%;
   display:grid;
   place-items:center;
-  color:#8db0ff
+  color:#FFB4E6
 }
 .trust-strip {
-  background:#f5f7fa;
+  background:#FAF7FB;
   border-bottom:1px solid var(--border)
 }
 .trust-grid {
@@ -426,7 +439,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
   gap:9px;
   font-size:13px;
   font-weight:700;
-  color:#475467
+  color:#5B5062
 }
 .trust-grid span {
   color:var(--accent)
@@ -506,7 +519,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
 }
 .service-card:hover {
   transform:translateY(-5px);
-  border-color:#b8caf7;
+  border-color:#E9A8D1;
   box-shadow:0 20px 45px rgba(16,24,40,.07)
 }
 .card-top {
@@ -517,13 +530,13 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
 .number {
   font-size:11px;
   font-weight:800;
-  color:#98a2b3
+  color:#8B7D91
 }
 .service-icon {
   width:42px;
   height:42px;
   border-radius:12px;
-  background:#eef4ff;
+  background:#FCE7F3;
   color:var(--accent);
   display:grid;
   place-items:center
@@ -548,7 +561,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
 }
 .service-card li {
   font-size:11px;
-  color:#475467
+  color:#5B5062
 }
 .service-card li:before {
   content:'+';
@@ -560,7 +573,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
   position:absolute;
   right:22px;
   bottom:22px;
-  color:#98a2b3;
+  color:#8B7D91;
   transition:.25s
 }
 .service-card:hover .card-arrow {
@@ -572,7 +585,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
   background:var(--background-secondary)
 }
 .selector-box {
-  background:#0B1020;
+  background:#24112F;
   color:#fff;
   border-radius:26px;
   padding:54px
@@ -583,7 +596,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
   margin:14px 0 12px
 }
 .selector> .container> .selector-box>p {
-  color:#aeb7c8;
+  color:#D8C8DF;
   max-width:650px;
   line-height:1.7
 }
@@ -594,9 +607,9 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
   margin:34px 0
 }
 .option {
-  border:1px solid #28334a;
-  background:#121a2c;
-  color:#aeb7c8;
+  border:1px solid #493252;
+  background:#2D1B3B;
+  color:#D8C8DF;
   border-radius:12px;
   padding:14px;
   text-align:left;
@@ -606,20 +619,20 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
   min-height:50px
 }
 .option:hover,.option.selected {
-  border-color:#638ef9;
-  background:#182544;
+  border-color:#D946A8;
+  background:#42204D;
   color:#fff
 }
 .option.selected {
   box-shadow:inset 0 0 0 1px rgba(99,142,249,.15)
 }
 .selector-bottom {
-  border-top:1px solid #253047;
+  border-top:1px solid #4A3154;
   padding-top:24px;
   display:flex;
   justify-content:space-between;
   align-items:center;
-  color:#9da8ba;
+  color:#C2B1C9;
   font-size:13px
 }
 .selector-bottom b {
@@ -634,12 +647,12 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
   gap:14px
 }
 .solution-card {
-  border-top:2px solid #dfe5ed;
+  border-top:2px solid #E5DCE8;
   padding:26px 2px 0
 }
 .solution-card>span {
   font-size:11px;
-  color:#98a2b3;
+  color:#8B7D91;
   font-weight:800
 }
 .solution-card h3 {
@@ -652,12 +665,12 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
   margin:0 0 26px;
   display:grid;
   gap:8px;
-  color:#667085;
+  color:#6B6070;
   font-size:13px
 }
 .solution-card li:before {
   content:'—';
-  color:#b4bdca;
+  color:#B5A6BC;
   margin-right:8px
 }
 .solution-card button {
@@ -671,7 +684,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
   gap:7px
 }
 .tech-section {
-  background:#0B1020;
+  background:#24112F;
   color:#fff;
   overflow:hidden
 }
@@ -688,7 +701,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
   margin:16px 0
 }
 .tech-section> .container>div>p {
-  color:#aeb7c8;
+  color:#D8C8DF;
   line-height:1.7;
   max-width:570px
 }
@@ -701,14 +714,14 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
   display:grid;
   grid-template-columns:145px 1fr;
   gap:18px;
-  border-top:1px solid #273149;
+  border-top:1px solid #493453;
   padding-top:14px
 }
 .tech-group>span {
   display:flex;
   align-items:center;
   gap:7px;
-  color:#8f9bb0;
+  color:#B7A5BE;
   font-size:11px;
   font-weight:800;
   letter-spacing:.08em
@@ -721,9 +734,9 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
 .tech-group b {
   font-size:12px;
   padding:7px 9px;
-  border:1px solid #29344b;
+  border:1px solid #4B3555;
   border-radius:7px;
-  color:#dbe2ef
+  color:#E9DDF0
 }
 .stack-visual {
   min-height:480px;
@@ -735,8 +748,8 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
   width:150px;
   height:150px;
   border-radius:50%;
-  border:1px solid #4364a7;
-  background:radial-gradient(circle,#1e3159,#111a2d 65%);
+  border:1px solid #A855B7;
+  background:radial-gradient(circle,#59266B,#2C1737 65%);
   display:grid;
   place-items:center;
   font-weight:800;
@@ -749,8 +762,8 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
   padding:10px 13px;
   border:1px solid #30405e;
   border-radius:9px;
-  background:#111a2d;
-  color:#dce5f5;
+  background:#2C1737;
+  color:#F1E7F5;
   font-size:11px;
   font-weight:800;
   z-index:3
@@ -781,7 +794,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
 }
 .stack-line {
   position:absolute;
-  border-top:1px dashed #2c4167;
+  border-top:1px dashed #7E4A8E;
   width:210px;
   transform-origin:left
 }
@@ -801,7 +814,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
   transform:rotate(90deg);
   height:170px;
   border-top:0;
-  border-left:1px dashed #2c4167;
+  border-left:1px dashed #7E4A8E;
   width:1px
 }
 .projects {
@@ -827,28 +840,28 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
   height:220px;
   padding:18px;
   position:relative;
-  background:linear-gradient(135deg,#dfe9ff,#f8fbff)
+  background:linear-gradient(135deg,#F6E5F2,#FFFAFD)
 }
 .project-visual.store {
-  background:linear-gradient(135deg,#e8e3ff,#faf9ff)
+  background:linear-gradient(135deg,#F0E5FF,#FCF9FF)
 }
 .project-visual.care {
-  background:linear-gradient(135deg,#e1f4ec,#f9fffc)
+  background:linear-gradient(135deg,#E5F7EF,#FAFFFC)
 }
 .project-visual.ops {
-  background:linear-gradient(135deg,#f8e8df,#fffaf7)
+  background:linear-gradient(135deg,#FBEAE7,#FFFCFB)
 }
 .project-visual.data {
-  background:linear-gradient(135deg,#e2edf2,#fbfdfe)
+  background:linear-gradient(135deg,#E6F1F5,#FCFEFF)
 }
 .project-visual.help {
-  background:linear-gradient(135deg,#f2e9dd,#fffdf9)
+  background:linear-gradient(135deg,#F6EDE3,#FFFDFC)
 }
 .project-visual>span {
   font-size:8px;
   letter-spacing:.13em;
   font-weight:900;
-  color:#44546d
+  color:#5B4862
 }
 .project-window {
   position:absolute;
@@ -857,7 +870,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
   top:56px;
   bottom:0;
   background:#fff;
-  border:1px solid #d9e0ea;
+  border:1px solid #E5DCE8;
   border-bottom:0;
   border-radius:12px 12px 0 0;
   box-shadow:0 15px 30px rgba(0,0,0,.08);
@@ -866,7 +879,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
 .mini-top {
   height:12px;
   width:45%;
-  background:#e7ebf2;
+  background:#EEE7F0;
   border-radius:4px;
   margin-bottom:14px
 }
@@ -877,7 +890,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
 }
 .mini-grid i {
   height:52px;
-  background:#f4f6fa;
+  background:#F8F4FA;
   border-radius:6px
 }
 .mini-grid i:last-child {
@@ -892,7 +905,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
 }
 .project-content small {
   font-size:10px;
-  color:#98a2b3;
+  color:#8B7D91;
   font-weight:800
 }
 .project-content h3 {
@@ -901,13 +914,13 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
 }
 .project-content>p {
   grid-column:1/-1;
-  color:#667085;
+  color:#6B6070;
   font-size:13px;
   line-height:1.65;
   margin:2px 0
 }
 .project-arrow {
-  color:#98a2b3
+  color:#8B7D91
 }
 .tags {
   grid-column:1/-1;
@@ -920,7 +933,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
   padding:6px 8px;
   border:1px solid var(--border);
   border-radius:6px;
-  color:#667085
+  color:#6B6070
 }
 .project-content button {
   grid-column:1/-1;
@@ -954,7 +967,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
   margin:18px 0 8px
 }
 .why-grid p {
-  color:#667085;
+  color:#6B6070;
   font-size:13px;
   line-height:1.7;
   margin:0
@@ -966,7 +979,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
   display:grid;
   grid-template-columns:repeat(7,1fr);
   gap:0;
-  border-top:1px solid #d9dee7
+  border-top:1px solid #E5DCE8
 }
 .timeline article {
   position:relative;
@@ -987,7 +1000,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
 }
 .timeline article small {
   font-weight:800;
-  color:#98a2b3;
+  color:#8B7D91;
   font-size:10px
 }
 .timeline article h3 {
@@ -997,12 +1010,12 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
 }
 .timeline article p {
   font-size:11px;
-  color:#667085;
+  color:#6B6070;
   line-height:1.65;
   padding-right:14px
 }
 .problem-cta {
-  background:#1a2440;
+  background:#351844;
   color:#fff;
   padding:78px 0
 }
@@ -1020,15 +1033,15 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
   margin:14px 0
 }
 .problem-cta p {
-  color:#aeb7c8;
+  color:#D8C8DF;
   margin:0
 }
 .btn-light {
   background:#fff;
-  color:#0B1020
+  color:#24112F
 }
 .lead-section {
-  background:#0B1020;
+  background:#24112F;
   color:#fff
 }
 .lead-grid {
@@ -1044,24 +1057,24 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
   margin:15px 0
 }
 .lead-info>p {
-  color:#aeb7c8;
+  color:#D8C8DF;
   line-height:1.75
 }
 .lead-list {
   display:grid;
   gap:12px;
   margin:28px 0;
-  color:#dce3ef;
+  color:#EDE3F1;
   font-size:13px
 }
 .lead-list div {
   padding-bottom:12px;
-  border-bottom:1px solid #263148
+  border-bottom:1px solid #4A3154
 }
 .contact-meta {
   display:grid;
   gap:10px;
-  color:#8f9bb0;
+  color:#B7A5BE;
   font-size:12px;
   margin-top:34px
 }
@@ -1089,11 +1102,11 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
 .field>span {
   font-size:11px;
   font-weight:800;
-  color:#344054
+  color:#463B4A
 }
 .field input,.field select,.field textarea {
   width:100%;
-  border:1px solid #dfe3ea;
+  border:1px solid #DED4E2;
   border-radius:10px;
   padding:12px 13px;
   background:#fff;
@@ -1101,7 +1114,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
   resize:vertical
 }
 .field input::placeholder,.field textarea::placeholder {
-  color:#98a2b3
+  color:#8B7D91
 }
 .field select {
   appearance:auto
@@ -1116,9 +1129,9 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
   gap:7px
 }
 .form-services button {
-  border:1px solid #dfe3ea;
+  border:1px solid #DED4E2;
   background:#fff;
-  color:#667085;
+  color:#6B6070;
   border-radius:8px;
   padding:8px 10px;
   font-size:10px;
@@ -1127,9 +1140,9 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
   align-items:center
 }
 .form-services button.active {
-  border-color:#6f98ef;
-  background:#edf4ff;
-  color:#1d56d3
+  border-color:#D946A8;
+  background:#FCE7F3;
+  color:#DB2777
 }
 .submit-btn {
   width:100%;
@@ -1144,9 +1157,9 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
   }
 }
 .form-error-banner {
-  background:#fff1f0;
-  color:#b42318;
-  border:1px solid #f5c8c5;
+  background:#FFF1F7;
+  color:#B4235A;
+  border:1px solid #F2B8D0;
   padding:11px;
   border-radius:9px;
   font-size:11px;
@@ -1168,7 +1181,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
   padding:70px 40px
 }
 .success-card>svg {
-  color:#16a05d;
+  color:#16A05D;
   margin-bottom:22px
 }
 .success-card h2 {
@@ -1176,7 +1189,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
   margin:12px 0
 }
 .success-card p {
-  color:#667085;
+  color:#6B6070;
   line-height:1.8;
   margin-bottom:28px
 }
@@ -1189,7 +1202,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
   gap:90px
 }
 .faq-grid>div>p {
-  color:#667085;
+  color:#6B6070;
   line-height:1.7
 }
 .faq-list {
@@ -1215,7 +1228,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
 }
 .faq-answer p {
   margin:0;
-  color:#667085;
+  color:#6B6070;
   font-size:13px;
   line-height:1.75
 }
@@ -1225,7 +1238,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
   background:var(--background-secondary)
 }
 .final-cta p {
-  color:#667085;
+  color:#6B6070;
   max-width:620px;
   margin:18px auto 28px;
   line-height:1.7
@@ -1236,7 +1249,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
   gap:10px
 }
 .footer {
-  background:#0B1020;
+  background:#24112F;
   color:#fff;
   padding:70px 0 24px
 }
@@ -1250,7 +1263,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
   margin-bottom:15px
 }
 .footer-grid p {
-  color:#8f9bb0;
+  color:#B7A5BE;
   font-size:13px;
   line-height:1.7;
   max-width:280px
@@ -1268,7 +1281,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
   gap:10px
 }
 .footer-grid>div:not(:first-child) button,.footer-grid>div:not(:first-child) span {
-  color:#8f9bb0;
+  color:#B7A5BE;
   font-size:12px;
   text-align:left
 }
@@ -1276,11 +1289,11 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
   color:#fff
 }
 .footer-bottom {
-  border-top:1px solid #252f44;
+  border-top:1px solid #4A3154;
   padding-top:20px;
   display:flex;
   justify-content:space-between;
-  color:#66738a;
+  color:#A394AA;
   font-size:10px
 }
 .footer-bottom div {
@@ -1290,7 +1303,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
 .back-top {
   position:fixed;
   z-index:900;
-  right:22px;
+  left:22px;
   bottom:22px;
   width:42px;
   height:42px;
@@ -1325,7 +1338,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
     gap:20px
   }
   .timeline article {
-    border-top:1px solid #d9dee7
+    border-top:1px solid #E5DCE8
   }
   .tech-grid {
     gap:40px
@@ -1346,7 +1359,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
   }
   .mobile-menu {
     display:block;
-    background:#0B1020;
+    background:#24112F;
     border-top:1px solid rgba(255,255,255,.08);
     height:calc(100vh - 76px);
     padding:24px 20px
@@ -1365,7 +1378,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
   }
   .mobile-menu .mobile-cta {
     background:#fff;
-    color:#0B1020;
+    color:#24112F;
     border-radius:12px;
     padding:14px 16px;
     margin-top:10px;
@@ -1848,3 +1861,1378 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
     transition-duration:.01ms!important
   }
 }
+
+/* =========================================================
+   A-TECH PREMIUM VISUAL SYSTEM — FINAL OVERRIDES
+   Purpose: maximum readability, visible CTAs, consistent
+   pink/purple branding, polished interactions.
+   ========================================================= */
+
+html {
+  background: var(--background);
+  color-scheme: light;
+}
+
+body {
+  background:
+    radial-gradient(circle at 10% 0%, rgba(236,72,153,.045), transparent 30%),
+    radial-gradient(circle at 90% 20%, rgba(124,58,237,.045), transparent 28%),
+    var(--background);
+  color: var(--text);
+}
+
+::selection {
+  background: rgba(236,72,153,.22);
+  color: var(--primary);
+}
+
+button,
+a,
+input,
+select,
+textarea {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid rgba(236,72,153,.32);
+  outline-offset: 3px;
+}
+
+/* ---------- NAVIGATION ---------- */
+.navbar {
+  color: #fff;
+}
+
+.navbar-scrolled {
+  background: rgba(36,17,47,.92);
+  border-bottom-color: rgba(255,255,255,.12);
+  box-shadow: 0 12px 40px rgba(36,17,47,.20);
+}
+
+.brand {
+  color: #fff;
+}
+
+.brand span {
+  color: #F0A6FF !important;
+}
+
+.desktop-nav button {
+  color: rgba(255,255,255,.82);
+}
+
+.desktop-nav button:hover {
+  color: #fff;
+}
+
+.nav-cta {
+  background: linear-gradient(135deg, #fff 0%, #FCE7F3 100%);
+  color: #24112F !important;
+  border-color: rgba(255,255,255,.55);
+  box-shadow: 0 8px 25px rgba(0,0,0,.12);
+}
+
+.nav-cta:hover {
+  background: #fff;
+  transform: translateY(-1px);
+}
+
+/* ---------- HERO ---------- */
+.hero {
+  position: relative;
+  background:
+    radial-gradient(circle at 82% 16%, rgba(236,72,153,.25), transparent 32%),
+    radial-gradient(circle at 62% 82%, rgba(124,58,237,.20), transparent 35%),
+    linear-gradient(135deg, #24112F 0%, #321543 48%, #24112F 100%);
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  width: 420px;
+  height: 420px;
+  top: -180px;
+  right: -100px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(236,72,153,.18), transparent 68%);
+  filter: blur(10px);
+  pointer-events: none;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  width: 360px;
+  height: 360px;
+  left: -180px;
+  bottom: -180px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(124,58,237,.16), transparent 68%);
+  pointer-events: none;
+}
+
+.hero > .container {
+  position: relative;
+  z-index: 2;
+}
+
+.hero .eyebrow {
+  color: #F5B7FF;
+}
+
+.hero h1 {
+  color: #fff;
+}
+
+.hero h1 em,
+.hero-copy h1 em {
+  color: #FF8FCB !important;
+  background: linear-gradient(90deg, #FF8FCB, #D8B4FE);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero-copy p {
+  color: #E9DFF0 !important;
+}
+
+.hero-actions {
+  position: relative;
+  z-index: 5;
+}
+
+/* ---------- ALL BUTTONS ---------- */
+.btn {
+  position: relative;
+  z-index: 2;
+  min-height: 46px;
+  white-space: nowrap;
+  text-decoration: none;
+  user-select: none;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #EC4899 0%, #DB2777 52%, #7C3AED 100%) !important;
+  color: #fff !important;
+  border: 1px solid rgba(255,255,255,.12);
+  box-shadow:
+    0 12px 30px rgba(219,39,119,.25),
+    0 4px 14px rgba(124,58,237,.16);
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: linear-gradient(135deg, #F05BA5 0%, #E03182 52%, #8B5CF6 100%) !important;
+  color: #fff !important;
+  transform: translateY(-2px);
+  box-shadow:
+    0 16px 36px rgba(219,39,119,.30),
+    0 7px 18px rgba(124,58,237,.20);
+}
+
+.btn-secondary {
+  background: #fff !important;
+  color: #3B2345 !important;
+  border: 1px solid #E2D5E6 !important;
+}
+
+.btn-secondary:hover {
+  background: #FDF4FA !important;
+  color: #24112F !important;
+  border-color: #E5A8CD !important;
+}
+
+.hero .btn-secondary {
+  background: rgba(255,255,255,.07) !important;
+  color: #fff !important;
+  border-color: rgba(255,255,255,.28) !important;
+  backdrop-filter: blur(8px);
+}
+
+.hero .btn-secondary:hover {
+  background: rgba(255,255,255,.14) !important;
+  border-color: rgba(255,255,255,.48) !important;
+  color: #fff !important;
+}
+
+.btn-light {
+  background: linear-gradient(135deg, #fff 0%, #FCE7F3 100%) !important;
+  color: #32143F !important;
+  border: 1px solid rgba(255,255,255,.6);
+}
+
+.btn-light:hover {
+  background: #fff !important;
+  color: #24112F !important;
+  transform: translateY(-2px);
+}
+
+/* ---------- HERO IMAGE ---------- */
+.hero-image {
+  position: relative;
+  z-index: 2;
+  border: 1px solid rgba(255,255,255,.16);
+  box-shadow:
+    0 30px 90px rgba(36,17,47,.42),
+    0 0 0 1px rgba(236,72,153,.08);
+  animation: heroFloat 7s ease-in-out infinite;
+}
+
+@keyframes heroFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+/* ---------- TRUST / LIGHT SECTIONS ---------- */
+.trust-strip {
+  background: #FBF8FC;
+}
+
+.trust-grid div {
+  color: #514657;
+}
+
+.trust-grid span {
+  color: #D946A8;
+}
+
+.intro,
+.solutions,
+.why,
+.faq {
+  background: #fff;
+}
+
+.text-link,
+.solution-card button,
+.project-content button {
+  color: #C0268C !important;
+}
+
+.text-link:hover,
+.solution-card button:hover,
+.project-content button:hover {
+  color: #7C3AED !important;
+}
+
+/* ---------- SERVICES ---------- */
+.services,
+.projects,
+.process {
+  background:
+    linear-gradient(180deg, #F8F4F9 0%, #F5F0F7 100%);
+}
+
+.service-card,
+.project-card {
+  background: #fff;
+  border-color: #E6DCE9;
+  box-shadow: 0 4px 18px rgba(67,31,77,.035);
+}
+
+.service-card:hover,
+.project-card:hover {
+  border-color: #E2A6CE !important;
+  box-shadow:
+    0 20px 50px rgba(72,32,82,.10),
+    0 0 0 1px rgba(236,72,153,.05);
+}
+
+.service-icon {
+  background: linear-gradient(135deg, #FCE7F3, #F3E8FF) !important;
+  color: #C0268C !important;
+}
+
+.service-card li::before {
+  color: #D946A8 !important;
+}
+
+.card-arrow,
+.project-arrow {
+  color: #9A879F;
+}
+
+.service-card:hover .card-arrow {
+  color: #C0268C;
+}
+
+/* ---------- SELECTOR ---------- */
+.selector {
+  background: #F7F2F8;
+}
+
+.selector-box {
+  background:
+    radial-gradient(circle at 85% 15%, rgba(236,72,153,.18), transparent 32%),
+    radial-gradient(circle at 15% 85%, rgba(124,58,237,.16), transparent 30%),
+    linear-gradient(135deg, #281332 0%, #351842 55%, #24112F 100%) !important;
+  box-shadow: 0 25px 70px rgba(36,17,47,.16);
+}
+
+.selector > .container > .selector-box > p {
+  color: #DCCDE2 !important;
+}
+
+.option {
+  border-color: rgba(255,255,255,.14) !important;
+  background: rgba(255,255,255,.055) !important;
+  color: #D9C9E0 !important;
+}
+
+.option:hover,
+.option.selected {
+  border-color: #EC4899 !important;
+  background: rgba(236,72,153,.13) !important;
+  color: #fff !important;
+}
+
+.option.selected {
+  box-shadow:
+    inset 0 0 0 1px rgba(236,72,153,.22),
+    0 8px 25px rgba(236,72,153,.10);
+}
+
+.selector-bottom {
+  border-top-color: rgba(255,255,255,.13) !important;
+  color: #C9B8D1 !important;
+}
+
+.selector-bottom b {
+  color: #fff !important;
+}
+
+/* ---------- TECHNOLOGY ---------- */
+.tech-section {
+  background:
+    radial-gradient(circle at 20% 20%, rgba(236,72,153,.13), transparent 30%),
+    radial-gradient(circle at 80% 80%, rgba(124,58,237,.13), transparent 32%),
+    #24112F !important;
+}
+
+.tech-section > .container > div > p {
+  color: #D8C8DF !important;
+}
+
+.tech-group {
+  border-top-color: rgba(255,255,255,.13) !important;
+}
+
+.tech-group > span {
+  color: #BBA8C2 !important;
+}
+
+.tech-group b {
+  border-color: rgba(255,255,255,.14) !important;
+  background: rgba(255,255,255,.035);
+  color: #EEE4F2 !important;
+}
+
+.stack-core {
+  border-color: #E78ACB !important;
+  background:
+    radial-gradient(circle at 35% 30%, #8E3FA0 0%, #542466 45%, #2C1737 72%) !important;
+  box-shadow:
+    0 0 80px rgba(236,72,153,.20),
+    0 0 140px rgba(124,58,237,.12);
+}
+
+.stack-node {
+  border-color: rgba(236,72,153,.28) !important;
+  background: rgba(44,23,55,.94) !important;
+  color: #F0E5F4 !important;
+  box-shadow: 0 8px 25px rgba(0,0,0,.16);
+}
+
+.stack-line {
+  border-color: rgba(236,72,153,.34) !important;
+}
+
+/* ---------- PROJECT VISUALS ---------- */
+.project-visual {
+  background: linear-gradient(135deg, #FBE8F4, #FCF6FF) !important;
+}
+
+.project-visual.store {
+  background: linear-gradient(135deg, #F0E5FF, #FCF8FF) !important;
+}
+
+.project-visual.care {
+  background: linear-gradient(135deg, #E9F8F1, #FAFFFC) !important;
+}
+
+.project-visual.ops {
+  background: linear-gradient(135deg, #FBE9F0, #FFF9FB) !important;
+}
+
+.project-visual.data {
+  background: linear-gradient(135deg, #EAF1F8, #FBFCFF) !important;
+}
+
+.project-visual.help {
+  background: linear-gradient(135deg, #F4EAF9, #FFFCFF) !important;
+}
+
+.project-visual > span {
+  color: #5C4862 !important;
+}
+
+.project-window {
+  border-color: #E1D5E4 !important;
+}
+
+/* ---------- WHY / PROCESS ---------- */
+.why-grid {
+  border-color: #E5DCE8 !important;
+}
+
+.why-grid article {
+  border-color: #E5DCE8 !important;
+}
+
+.why-grid svg,
+.step-icon {
+  color: #C0268C !important;
+}
+
+.timeline {
+  border-top-color: #E5DCE8 !important;
+}
+
+.timeline article {
+  border-top-color: #E5DCE8;
+}
+
+.step-icon {
+  background: #fff !important;
+  border-color: #E3D8E7 !important;
+}
+
+/* ---------- PROBLEM CTA ---------- */
+.problem-cta {
+  background:
+    radial-gradient(circle at 80% 20%, rgba(236,72,153,.20), transparent 34%),
+    linear-gradient(135deg, #32133F, #24112F) !important;
+}
+
+.problem-cta p {
+  color: #D9C9E0 !important;
+}
+
+/* ---------- LEAD / FORM ---------- */
+.lead-section,
+.footer {
+  background:
+    radial-gradient(circle at 80% 15%, rgba(236,72,153,.12), transparent 28%),
+    radial-gradient(circle at 15% 80%, rgba(124,58,237,.10), transparent 30%),
+    #24112F !important;
+}
+
+.lead-info > p {
+  color: #D8C8DF !important;
+}
+
+.lead-list {
+  color: #EDE3F1 !important;
+}
+
+.lead-list div {
+  border-bottom-color: rgba(255,255,255,.12) !important;
+}
+
+.contact-meta {
+  color: #B9A6C0 !important;
+}
+
+.lead-form,
+.success-card {
+  background: #fff !important;
+  color: #241F27 !important;
+  box-shadow: 0 25px 70px rgba(0,0,0,.18);
+}
+
+.field > span {
+  color: #403743 !important;
+}
+
+.field input,
+.field select,
+.field textarea {
+  border-color: #DED4E2 !important;
+  color: #241F27 !important;
+  background: #fff !important;
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  border-color: #D946A8 !important;
+  box-shadow: 0 0 0 4px rgba(236,72,153,.10);
+  outline: none;
+}
+
+.field input::placeholder,
+.field textarea::placeholder {
+  color: #9A8A9F !important;
+}
+
+.form-services button {
+  border-color: #DED4E2 !important;
+  background: #fff !important;
+  color: #6B6070 !important;
+}
+
+.form-services button:hover {
+  border-color: #E4A5CC !important;
+  background: #FDF4FA !important;
+  color: #A61E73 !important;
+}
+
+.form-services button.active {
+  border-color: #D946A8 !important;
+  background: #FCE7F3 !important;
+  color: #B4237C !important;
+}
+
+.form-error-banner {
+  background: #FFF1F7 !important;
+  color: #A61E55 !important;
+  border-color: #F2B8D0 !important;
+}
+
+.success-card > svg {
+  color: #16A05D !important;
+}
+
+/* ---------- FAQ / FINAL CTA ---------- */
+.faq-list,
+.faq-item {
+  border-color: #E5DCE8 !important;
+}
+
+.faq-item > button {
+  color: #241F27 !important;
+}
+
+.final-cta {
+  background:
+    radial-gradient(circle at 50% 0%, rgba(236,72,153,.10), transparent 42%),
+    #F7F3F8 !important;
+}
+
+.final-cta p {
+  color: #6B6070 !important;
+}
+
+/* ---------- FOOTER ---------- */
+.footer-grid p,
+.footer-grid > div:not(:first-child) button,
+.footer-grid > div:not(:first-child) span {
+  color: #B7A5BE !important;
+}
+
+.footer-grid h4 {
+  color: #EEE4F2 !important;
+}
+
+.footer-grid button:hover {
+  color: #fff !important;
+}
+
+.footer-bottom {
+  border-top-color: rgba(255,255,255,.13) !important;
+  color: #A394AA !important;
+}
+
+.footer .brand span {
+  color: #F0A6FF !important;
+}
+
+/* ---------- BACK TO TOP ---------- */
+.back-top {
+  border-color: #E0D5E3 !important;
+  background: #fff !important;
+  color: #3B2345 !important;
+}
+
+.back-top:hover {
+  border-color: #D946A8 !important;
+  color: #C0268C !important;
+  box-shadow: 0 12px 35px rgba(236,72,153,.16);
+}
+
+/* ---------- MOBILE MENU ---------- */
+@media (max-width: 800px) {
+  .mobile-menu {
+    background:
+      radial-gradient(circle at 85% 10%, rgba(236,72,153,.16), transparent 30%),
+      #24112F !important;
+    border-top-color: rgba(255,255,255,.12) !important;
+  }
+
+  .mobile-menu button {
+    color: #fff !important;
+  }
+
+  .mobile-menu .mobile-cta {
+    background: linear-gradient(135deg, #fff, #FCE7F3) !important;
+    color: #24112F !important;
+  }
+
+  .hero {
+    min-height: auto;
+  }
+}
+
+@media (max-width: 500px) {
+  .hero-image {
+    animation-duration: 8s;
+  }
+
+  .btn {
+    min-height: 48px;
+  }
+}
+
+/* ---------- ACCESSIBILITY / REDUCED MOTION ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .hero-image {
+    animation: none !important;
+  }
+}
+
+/* ---------- SAFETY NET: NEVER FADE IMPORTANT UI ---------- */
+.btn,
+.nav-cta,
+.mobile-cta,
+.form-services button,
+.option,
+.solution-card button,
+.project-content button {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+.btn:disabled {
+  opacity: .5 !important;
+}
+
+/* Keep SVG icons readable */
+.btn svg,
+.nav-cta svg,
+.mobile-cta svg,
+.option svg,
+.text-link svg,
+.solution-card button svg,
+.project-content button svg {
+  flex-shrink: 0;
+  opacity: 1;
+}
+
+/* =========================================
+   SERVICE CARDS — INDIVIDUAL AI VISUALS
+========================================= */
+
+.service-card {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background: rgba(255, 255, 255, 0.96);
+}
+
+/* AI visual layer */
+.service-card::before {
+  content: "";
+  position: absolute;
+
+  right: -35px;
+  bottom: -35px;
+
+  width: 98%;
+  height: 62%;
+
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+
+  opacity: 0.60;
+
+  /* Removes the dark/black parts of the generated artwork visually */
+  mix-blend-mode: multiply;
+
+  z-index: 0;
+  pointer-events: none;
+
+  transition:
+    transform 0.45s ease,
+    opacity 0.45s ease;
+}
+
+
+/* =========================================
+   01 — WEBSITE DEVELOPMENT
+========================================= */
+
+.service-card:nth-child(1)::before {
+  background-image: url("/images/website-bg.png");
+}
+
+
+/* =========================================
+   02 — WEB APPLICATIONS
+========================================= */
+
+.service-card:nth-child(2)::before {
+  background-image: url("/images/webApp-bg.png");
+}
+
+
+/* =========================================
+   03 — CRM & BUSINESS SOFTWARE
+========================================= */
+
+.service-card:nth-child(3)::before {
+  background-image: url("/images/crm-bg.png");
+}
+
+
+/* =========================================
+   04 — MOBILE APPLICATIONS
+========================================= */
+
+.service-card:nth-child(4)::before {
+  background-image: url("/images/app-bg.png");
+}
+
+
+/* =========================================
+   05 — DIGITAL MARKETING
+========================================= */
+
+.service-card:nth-child(5)::before {
+  background-image: url("/images/digital-bg.png");
+}
+
+
+/* =========================================
+   06 — UI / UX DESIGN
+========================================= */
+
+.service-card:nth-child(6)::before {
+  background-image: url("/images/ui ux-bg.png");
+}
+
+
+/* =========================================
+   07 — API & BACKEND
+========================================= */
+
+.service-card:nth-child(7)::before {
+  background-image: url("/images/api-bg.png");
+}
+
+
+/* =========================================
+   KEEP CONTENT ABOVE IMAGE
+========================================= */
+
+.service-card > * {
+  position: relative;
+  z-index: 2;
+}
+
+
+/* =========================================
+   HOVER EFFECT
+========================================= */
+
+.service-card:hover::before {
+  opacity: 0.20;
+  transform: scale(1.05);
+}/* =========================================
+    PROJECT IMAGE — 16:9 FULL FRAME
+ ========================================= */
+
+ .project-visual {
+   position: relative !important;
+
+   width: 100% !important;
+
+   /* 16:9 */
+   aspect-ratio: 16 / 9 !important;
+
+   height: auto !important;
+
+   padding: 0 !important;
+   margin: 0 !important;
+
+   overflow: hidden !important;
+
+   background: #ffffff !important;
+
+   box-sizing: border-box !important;
+ }
+
+
+ /* Hide PROJECT label */
+ .project-visual > span {
+   display: none !important;
+ }
+
+
+ /* 16:9 image frame */
+ .project-window {
+   position: absolute !important;
+
+   inset: 0 !important;
+
+   width: 100% !important;
+   height: 100% !important;
+
+   margin: 0 !important;
+   padding: 0 !important;
+
+   overflow: hidden !important;
+
+   border-radius: 0 !important;
+
+   background: #ffffff !important;
+
+   box-shadow: none !important;
+
+   box-sizing: border-box !important;
+ }
+
+
+ /* Image fills entire 16:9 frame */
+ .project-image {
+   display: block !important;
+
+   width: 100% !important;
+   height: 100% !important;
+
+   max-width: none !important;
+   max-height: none !important;
+
+   margin: 0 !important;
+   padding: 0 !important;
+
+   object-fit: contain !important;
+   object-position: center center !important;
+
+   border-radius: 0 !important;
+
+   box-sizing: border-box !important;
+
+   transition: transform 0.5s ease;
+ }
+
+
+ /* Subtle hover */
+ .project-card:hover .project-image {
+   transform: scale(1.02);
+ }
+ .projects-header h2 {
+   font-size: clamp(56px, 5vw, 82px) !important;
+   line-height: 1.02 !important;
+   letter-spacing: -3px;
+ }
+/* =========================================
+   3 CARD HORIZONTAL CAROUSEL
+   SMALLER + NO FADE
+========================================= */
+
+.project-carousel {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+
+  margin-top: 35px;
+  padding: 18px 0 25px;
+
+  border-radius: 24px;
+
+  background:
+    radial-gradient(
+      circle at 50% 50%,
+      rgba(124, 58, 237, 0.10),
+      transparent 55%
+    ),
+    #24112F;
+}
+
+
+/* Track */
+
+.project-track {
+  display: flex;
+  width: 300%;
+
+  align-items: center;
+
+  will-change: transform;
+}
+
+
+/* =========================================
+   CARDS
+========================================= */
+
+.project-slide {
+  flex: 0 0 33.333333%;
+  width: 33.333333%;
+
+  padding: 0 8px;
+
+  box-sizing: border-box;
+
+  opacity: 1 !important;
+  filter: none !important;
+
+  transform: scale(0.94);
+
+  transition:
+    transform 0.8s cubic-bezier(
+      0.22,
+      1,
+      0.36,
+      1
+    );
+}
+
+
+/* =========================================
+   CENTER CARD
+========================================= */
+
+.project-slide.center-card {
+  transform: scale(1);
+
+  opacity: 1 !important;
+  filter: none !important;
+
+  z-index: 3;
+}
+
+
+/* =========================================
+   LEFT + RIGHT CARDS
+========================================= */
+
+.project-slide.side-card {
+  transform: scale(0.74);
+
+  opacity: 1 !important;
+  filter: none !important;
+
+  z-index: 2;
+}
+
+
+/* =========================================
+   CARD SIZE
+========================================= */
+
+.project-slide .project-card {
+  width: 100%;
+
+  border-radius: 18px;
+
+  overflow: hidden;
+
+  box-shadow:
+    0 12px 35px
+    rgba(0, 0, 0, 0.16);
+
+  transition:
+    transform 0.8s ease,
+    box-shadow 0.8s ease;
+}
+
+
+/* Center card highlight */
+
+.project-slide.center-card .project-card {
+  box-shadow:
+    0 18px 45px
+    rgba(0, 0, 0, 0.25);
+
+  border-color:
+    rgba(236, 72, 153, 0.65);
+}
+
+
+/* =========================================
+   DOTS
+========================================= */
+
+.project-dots {
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+
+  gap: 8px;
+
+  margin-top: 16px;
+}
+
+.project-dots button {
+  width: 8px;
+  height: 8px;
+
+  padding: 0;
+
+  border: 1px solid #ec4899;
+
+  border-radius: 50%;
+
+  background: transparent;
+
+  cursor: pointer;
+
+  transition: all 0.3s ease;
+}
+
+.project-dots button.active {
+  width: 24px;
+
+  border-radius: 20px;
+
+  background: #ec4899;
+
+  border-color: #ec4899;
+}
+
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 900px) {
+
+  .project-slide {
+    padding: 0 6px;
+
+    transform: scale(0.96);
+  }
+
+  .project-slide.side-card {
+    transform: scale(0.96);
+  }
+
+  .project-slide.center-card {
+    transform: scale(1);
+  }
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 650px) {
+
+  .project-carousel {
+    margin-top: 25px;
+    padding: 12px 0 20px;
+  }
+
+  .project-slide {
+    padding: 0 4px;
+
+    transform: scale(0.97);
+  }
+
+  .project-slide.side-card {
+    transform: scale(0.97);
+  }
+
+  .project-slide.center-card {
+    transform: scale(1);
+  }
+}
+.project-card {
+  min-height: 480px;
+}
+
+.project-visual {
+  height: 300px;
+}.projects {
+   padding: 60px 0;
+ }
+
+ .projects .section-head {
+   margin-bottom: 25px;
+ }
+
+ .project-carousel {
+   margin-top: 25px;
+   padding: 10px 0 15px;
+ }.project-carousel {
+    height: 500px;
+    padding: 12px 0;
+    overflow: hidden;
+    border-radius: 24px;
+  }/* =========================================
+      FLOATING CALL + WHATSAPP
+   ========================================= */
+
+   .floating-contact {
+     position: fixed;
+
+     right: 22px;
+     bottom: 24px;
+
+     display: flex;
+     flex-direction: column;
+
+     gap: 12px;
+
+     z-index: 9999;
+   }
+
+
+   /* Individual button */
+
+   .floating-contact-btn {
+     position: relative;
+
+     width: 52px;
+     height: 52px;
+
+     display: flex;
+
+     align-items: center;
+     justify-content: center;
+
+     border-radius: 50%;
+
+     text-decoration: none;
+
+     color: #ffffff;
+
+     box-shadow:
+       0 8px 25px rgba(0, 0, 0, 0.20);
+
+     transition:
+       transform 0.25s ease,
+       box-shadow 0.25s ease;
+   }
+
+
+   /* Call */
+
+   .call-btn {
+     background: linear-gradient(
+       135deg,
+       #7c3aed,
+       #ec4899
+     );
+   }
+
+
+   /* WhatsApp */
+
+   .whatsapp-btn {
+     background: #25D366;
+   }
+
+
+   /* Hover */
+
+   .floating-contact-btn:hover {
+     transform: translateY(-4px) scale(1.06);
+
+     box-shadow:
+       0 12px 30px rgba(0, 0, 0, 0.28);
+   }
+
+
+   /* Click */
+
+   .floating-contact-btn:active {
+     transform: scale(0.94);
+   }
+
+
+   /* =========================================
+      TOOLTIP
+   ========================================= */
+
+   .floating-tooltip {
+     position: absolute;
+
+     right: calc(100% + 12px);
+
+     top: 50%;
+
+     transform:
+       translateY(-50%)
+       translateX(-5px);
+
+     white-space: nowrap;
+
+     padding: 8px 12px;
+
+     border-radius: 8px;
+
+     background: #24112F;
+
+     color: #ffffff;
+
+     font-size: 13px;
+
+     font-weight: 600;
+
+     opacity: 0;
+
+     visibility: hidden;
+
+     pointer-events: none;
+
+     transition:
+       opacity 0.2s ease,
+       transform 0.2s ease;
+   }
+
+
+   .floating-contact-btn:hover
+   .floating-tooltip {
+
+     opacity: 1;
+
+     visibility: visible;
+
+     transform:
+       translateY(-50%)
+       translateX(0);
+   }
+
+
+   /* =========================================
+      SUBTLE PULSE
+   ========================================= */
+
+   .whatsapp-btn::after {
+
+     content: "";
+
+     position: absolute;
+
+     inset: -4px;
+
+     border-radius: 50%;
+
+     border: 2px solid
+       rgba(37, 211, 102, 0.35);
+
+     animation:
+       whatsappPulse 2.2s infinite;
+   }
+
+
+   @keyframes whatsappPulse {
+
+     0% {
+       transform: scale(0.95);
+       opacity: 0.8;
+     }
+
+     70% {
+       transform: scale(1.25);
+       opacity: 0;
+     }
+
+     100% {
+       transform: scale(1.25);
+       opacity: 0;
+     }
+   }
+
+
+   /* =========================================
+      MOBILE
+   ========================================= */
+
+   @media (max-width: 600px) {
+
+     .floating-contact {
+
+       left: 14px;
+       bottom: 18px;
+
+       gap: 9px;
+     }
+
+     .floating-contact-btn {
+
+       width: 46px;
+       height: 46px;
+     }
+
+     .floating-contact-btn svg {
+
+       width: 19px;
+       height: 19px;
+     }
+
+     /* Hide tooltip on mobile */
+
+     .floating-tooltip {
+       display: none;
+     }
+   }
+   /* PROJECT CAROUSEL — CENTERED WITH 1% OUTER MARGIN */
+
+   .project-carousel {
+     width: 98%;
+     margin-left: auto;
+     margin-right: auto;
+
+     display: flex;
+     justify-content: center;
+     align-items: center;
+
+     overflow: hidden;
+   }
+
+   /* Keep the active card centered */
+   .project-track {
+     display: flex;
+     justify-content: center;
+     align-items: center;
+   }/* ================================
+       PROJECT CAROUSEL
+    ================================ */
+
+    .project-carousel {
+      width: 100%;
+      max-width: 100%;
+      overflow: hidden;
+      position: relative;
+      box-sizing: border-box;
+    }
+
+    .project-track {
+      display: flex;
+      flex-wrap: nowrap;
+      align-items: stretch;
+      width: max-content;
+      will-change: transform;
+    }
+
+    .project-slide {
+      flex: 0 0 auto !important;
+      box-sizing: border-box;
+      padding: 0 8px;
+    }
+
+    .project-slide .project-card {
+      width: 100%;
+      height: 100%;
+      box-sizing: border-box;
+    }

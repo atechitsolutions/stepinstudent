@@ -8,7 +8,7 @@ export default function Services()  {
 <div className="container">
 <div className="section-head">
 <div>
-<div className="eyebrow dark">OUR CAPABILITIES</div>
+<div className="eyebrow dark">OUR SERVICES</div>
 <h2>What Can We Build For You?</h2>
 </div>
 <p>Choose from a range of digital solutions designed for different business needs.</p>

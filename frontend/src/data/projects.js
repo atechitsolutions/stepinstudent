@@ -27,16 +27,4 @@ export const projects = [
          url: 'https://nutriposhannutraceutical.com/',
         image: "/images/projects/nutri-poshan-project.webp",
        }
-,
-     {
-    id: 4, title: 'FieldOps', category: 'Operations Platform', description: 'Concept dashboard for assigning field work, tracking status and coordinating teams.', tags: ['React', 'Spring Boot', 'MySQL'], accent: 'OPS'
-}
-,
-     {
-    id: 5, title: 'InsightHub', category: 'Analytics Dashboard', description: 'Concept analytics workspace for turning operational data into clear business views.', tags: ['React', 'Spring Boot', 'MySQL'], accent: 'DATA'
-}
-,
-     {
-    id: 6, title: 'ServiceDesk', category: 'Customer Portal', description: 'Concept support portal for requests, communication and service workflow visibility.', tags: ['React', 'Spring Boot', 'MySQL'], accent: 'HELP'
-}
 ];

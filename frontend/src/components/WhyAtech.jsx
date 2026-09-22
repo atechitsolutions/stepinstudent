@@ -8,7 +8,7 @@ export default function WhyAtech()  {
 <div className="container">
 <div className="section-head">
 <div>
-<div className="eyebrow dark">WHY A-TECH</div>
+<div className="eyebrow dark">WHY  CHOOSE A-TECH</div>
 <h2>Technology With a Business Perspective.</h2>
 </div>
 </div>
