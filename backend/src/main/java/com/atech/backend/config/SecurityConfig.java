@@ -33,14 +33,19 @@ public class SecurityConfig {
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
     }
 
+    // =====================================================
+    // PASSWORD ENCODER
+    // =====================================================
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-    // ===============================
+    // =====================================================
     // CORS CONFIGURATION
-    // ===============================
+    // =====================================================
+
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
 
@@ -48,7 +53,9 @@ public class SecurityConfig {
                 new CorsConfiguration();
 
         configuration.setAllowedOrigins(
-                List.of("http://localhost:5173")
+                List.of(
+                        "http://localhost:5173"
+                )
         );
 
         configuration.setAllowedMethods(
@@ -81,9 +88,10 @@ public class SecurityConfig {
         return source;
     }
 
-    // ===============================
+    // =====================================================
     // SECURITY CONFIGURATION
-    // ===============================
+    // =====================================================
+
     @Bean
     public SecurityFilterChain securityFilterChain(
             HttpSecurity http
@@ -91,68 +99,112 @@ public class SecurityConfig {
 
         http
 
-                // Disable CSRF because we are using JWT
-                .csrf(csrf -> csrf.disable())
+                // =================================================
+                // DISABLE CSRF
+                // JWT authentication is stateless
+                // =================================================
 
-                // Enable CORS
+                .csrf(csrf ->
+                        csrf.disable()
+                )
+
+                // =================================================
+                // ENABLE CORS
+                // =================================================
+
                 .cors(cors ->
                         cors.configurationSource(
                                 corsConfigurationSource()
                         )
                 )
 
-                // JWT = stateless
+                // =================================================
+                // STATELESS SESSION
+                // =================================================
+
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(
                                 SessionCreationPolicy.STATELESS
                         )
                 )
 
+                // =================================================
+                // AUTHORIZATION
+                // =================================================
+
                 .authorizeHttpRequests(auth -> auth
 
-                        // CORS preflight requests
+                        // -------------------------------------------------
+                        // CORS PREFLIGHT
+                        // -------------------------------------------------
+
                         .requestMatchers(
                                 HttpMethod.OPTIONS,
                                 "/**"
                         ).permitAll()
 
-                        // =========================
+
+                        // -------------------------------------------------
                         // ADMIN LOGIN
-                        // =========================
+                        // -------------------------------------------------
+
                         .requestMatchers(
                                 "/api/auth/login"
                         ).permitAll()
 
-                        // =========================
-                        // PUBLIC PROJECT VIEWING
-                        // =========================
+
+                        // -------------------------------------------------
+                        // PUBLIC PROJECT API
+                        // Anyone can VIEW projects
+                        // -------------------------------------------------
+
                         .requestMatchers(
                                 HttpMethod.GET,
                                 "/api/projects/**"
                         ).permitAll()
 
-                        // =========================
+
+                        // -------------------------------------------------
+                        // PUBLIC PROJECT IMAGES
+                        // IMPORTANT
+                        // -------------------------------------------------
+
+                        .requestMatchers(
+                                "/uploads/**"
+                        ).permitAll()
+
+
+                        // -------------------------------------------------
                         // PUBLIC INQUIRY FORM
-                        // =========================
+                        // -------------------------------------------------
+
                         .requestMatchers(
                                 "/api/inquiries/**"
                         ).permitAll()
 
-                        // =========================
+
+                        // -------------------------------------------------
                         // ADMIN ONLY
-                        // =========================
+                        // CREATE / UPDATE / DELETE PROJECTS
+                        // -------------------------------------------------
+
                         .requestMatchers(
                                 "/api/admin/**",
                                 "/api/projects/**"
                         ).hasRole("ADMIN")
 
-                        // =========================
+
+                        // -------------------------------------------------
                         // EVERYTHING ELSE
-                        // =========================
+                        // -------------------------------------------------
+
                         .anyRequest().authenticated()
                 )
 
-                // JWT filter
+                // =================================================
+                // JWT FILTER
+                // =================================================
+
                 .addFilterBefore(
                         jwtAuthenticationFilter,
                         UsernamePasswordAuthenticationFilter.class

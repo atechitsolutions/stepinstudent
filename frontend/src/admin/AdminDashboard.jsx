@@ -20,6 +20,17 @@ export default function AdminDashboard() {
   const [form, setForm] = useState(emptyProject);
   const [editingId, setEditingId] = useState(null);
 
+  // =====================================================
+  // IMAGE STATE
+  // =====================================================
+
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [imagePreview, setImagePreview] = useState('');
+
+  // =====================================================
+  // GENERAL STATE
+  // =====================================================
+
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
@@ -33,9 +44,9 @@ export default function AdminDashboard() {
     },
   };
 
-  /* =========================
-     LOAD PROJECTS
-  ========================= */
+  // =====================================================
+  // LOAD PROJECTS
+  // =====================================================
 
   const loadProjects = async () => {
     try {
@@ -44,14 +55,24 @@ export default function AdminDashboard() {
 
       const response = await axios.get(API_URL);
 
+      console.log('PROJECTS FROM SERVER:', response.data);
+
       setProjects(response.data);
     } catch (err) {
-      console.error(err);
-      setError('Unable to load projects.');
+      console.error('LOAD PROJECTS ERROR:', err);
+
+      setError(
+        err.response?.data?.message ||
+          'Unable to load projects.'
+      );
     } finally {
       setLoading(false);
     }
   };
+
+  // =====================================================
+  // INITIAL LOAD
+  // =====================================================
 
   useEffect(() => {
     if (!token) {
@@ -62,9 +83,9 @@ export default function AdminDashboard() {
     loadProjects();
   }, []);
 
-  /* =========================
-     FORM CHANGE
-  ========================= */
+  // =====================================================
+  // FORM CHANGE
+  // =====================================================
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -75,35 +96,374 @@ export default function AdminDashboard() {
     }));
   };
 
-  /* =========================
-     ADD / UPDATE
-  ========================= */
+  // =====================================================
+  // IMAGE VALIDATION
+  // =====================================================
+
+  const processImageFile = (file) => {
+    if (!file) {
+      return;
+    }
+
+    console.log('SELECTED IMAGE:', file);
+
+    // Check image type
+    if (!file.type.startsWith('image/')) {
+      setError(
+        'Please select a valid image file.'
+      );
+      return;
+    }
+
+    // Maximum 10 MB
+    if (file.size > 10 * 1024 * 1024) {
+      setError(
+        'Image size must be less than 10 MB.'
+      );
+      return;
+    }
+
+    setError('');
+
+    setSelectedImage(file);
+
+    // Create browser preview
+    const previewUrl =
+      URL.createObjectURL(file);
+
+    setImagePreview(previewUrl);
+
+    console.log(
+      'IMAGE READY FOR UPLOAD:',
+      file.name
+    );
+  };
+
+  // =====================================================
+  // IMAGE SELECT
+  // =====================================================
+
+  const handleImageChange = (e) => {
+    const file = e.target.files?.[0];
+
+    processImageFile(file);
+  };
+
+  // =====================================================
+  // IMAGE DROP
+  // =====================================================
+
+  const handleImageDrop = (e) => {
+    e.preventDefault();
+
+    const file =
+      e.dataTransfer.files?.[0];
+
+    processImageFile(file);
+  };
+
+  // =====================================================
+  // IMAGE DRAG OVER
+  // =====================================================
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+
+    e.currentTarget.style.borderColor =
+      '#a83b8c';
+
+    e.currentTarget.style.background =
+      '#fcf3fa';
+  };
+
+  // =====================================================
+  // IMAGE DRAG LEAVE
+  // =====================================================
+
+  const handleDragLeave = (e) => {
+    e.currentTarget.style.borderColor =
+      '#d8ceda';
+
+    e.currentTarget.style.background =
+      '#faf8fb';
+  };
+
+  // =====================================================
+  // IMAGE UPLOAD
+  // =====================================================
+
+  const uploadImage = async (projectId) => {
+    if (!selectedImage) {
+      console.log(
+        'NO IMAGE SELECTED - SKIPPING UPLOAD'
+      );
+
+      return null;
+    }
+
+    if (!projectId) {
+      throw new Error(
+        'Project ID is missing. Cannot upload image.'
+      );
+    }
+
+    console.log(
+      '===================================='
+    );
+
+    console.log(
+      'STARTING IMAGE UPLOAD'
+    );
+
+    console.log(
+      'Project ID:',
+      projectId
+    );
+
+    console.log(
+      'Image name:',
+      selectedImage.name
+    );
+
+    console.log(
+      'Image type:',
+      selectedImage.type
+    );
+
+    console.log(
+      'Image size:',
+      selectedImage.size
+    );
+
+    console.log(
+      '===================================='
+    );
+
+    const formData = new FormData();
+
+    formData.append(
+      'image',
+      selectedImage
+    );
+
+    try {
+      const response = await axios.post(
+        `${API_URL}/${projectId}/image`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      console.log(
+        '===================================='
+      );
+
+      console.log(
+        'IMAGE UPLOAD SUCCESS'
+      );
+
+      console.log(
+        'SERVER RESPONSE:',
+        response.data
+      );
+
+      console.log(
+        'IMAGE URL:',
+        response.data?.imageUrl
+      );
+
+      console.log(
+        '===================================='
+      );
+
+      return response.data;
+
+    } catch (err) {
+      console.error(
+        '===================================='
+      );
+
+      console.error(
+        'IMAGE UPLOAD FAILED'
+      );
+
+      console.error(
+        'STATUS:',
+        err.response?.status
+      );
+
+      console.error(
+        'SERVER RESPONSE:',
+        err.response?.data
+      );
+
+      console.error(
+        'ERROR:',
+        err
+      );
+
+      console.error(
+        '===================================='
+      );
+
+      throw err;
+    }
+  };
+
+  // =====================================================
+  // ADD / UPDATE PROJECT
+  // =====================================================
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (saving) {
+      return;
+    }
 
     try {
       setSaving(true);
       setError('');
 
+      console.log(
+        '===================================='
+      );
+
+      console.log(
+        'PROJECT SUBMISSION STARTED'
+      );
+
+      console.log(
+        'Selected image:',
+        selectedImage
+      );
+
+      console.log(
+        'Form:',
+        form
+      );
+
+      console.log(
+        '===================================='
+      );
+
+      let savedProject;
+
+      // =================================================
+      // UPDATE EXISTING PROJECT
+      // =================================================
+
       if (editingId) {
-        await axios.put(
+        console.log(
+          'UPDATING PROJECT:',
+          editingId
+        );
+
+        const response = await axios.put(
           `${API_URL}/${editingId}`,
           form,
           authConfig
         );
-      } else {
-        await axios.post(
+
+        savedProject = response.data;
+
+        console.log(
+          'PROJECT UPDATED:',
+          savedProject
+        );
+      }
+
+      // =================================================
+      // CREATE NEW PROJECT
+      // =================================================
+
+      else {
+        console.log(
+          'CREATING NEW PROJECT'
+        );
+
+        const response = await axios.post(
           API_URL,
           form,
           authConfig
         );
+
+        savedProject = response.data;
+
+        console.log(
+          'PROJECT CREATED:',
+          savedProject
+        );
       }
 
+      // =================================================
+      // IMPORTANT:
+      // UPLOAD IMAGE AFTER PROJECT HAS ID
+      // =================================================
+
+      if (selectedImage) {
+        if (!savedProject?.id) {
+          throw new Error(
+            'Project was saved but no project ID was returned.'
+          );
+        }
+
+        const imageProject =
+          await uploadImage(
+            savedProject.id
+          );
+
+        // Use the latest project returned
+        // from image upload
+        if (imageProject) {
+          savedProject =
+            imageProject;
+        }
+
+        console.log(
+          'PROJECT AFTER IMAGE UPLOAD:',
+          savedProject
+        );
+      }
+
+      // =================================================
+      // RESET FORM
+      // =================================================
+
       setForm(emptyProject);
+
+      setSelectedImage(null);
+
+      setImagePreview('');
+
       setEditingId(null);
 
+      // Reset file input
+      const fileInput =
+        document.getElementById(
+          'project-image-input'
+        );
+
+      if (fileInput) {
+        fileInput.value = '';
+      }
+
+      // =================================================
+      // RELOAD PROJECTS FROM DATABASE
+      // =================================================
+
       await loadProjects();
+
+      console.log(
+        'PROJECT LIST RELOADED'
+      );
+
+      console.log(
+        'PROJECT SUBMISSION COMPLETED'
+      );
 
       window.scrollTo({
         top: 0,
@@ -111,41 +471,124 @@ export default function AdminDashboard() {
       });
 
     } catch (err) {
-      console.error(err);
+      console.error(
+        '===================================='
+      );
+
+      console.error(
+        'PROJECT SAVE ERROR'
+      );
+
+      console.error(
+        'STATUS:',
+        err.response?.status
+      );
+
+      console.error(
+        'SERVER RESPONSE:',
+        err.response?.data
+      );
+
+      console.error(
+        'ERROR:',
+        err
+      );
+
+      console.error(
+        '===================================='
+      );
+
+      // =================================================
+      // UNAUTHORIZED
+      // =================================================
 
       if (err.response?.status === 401) {
         logout();
         return;
       }
 
+      // =================================================
+      // FORBIDDEN
+      // =================================================
+
       if (err.response?.status === 403) {
         setError(
           'You are not authorized to modify projects.'
         );
+
         return;
       }
 
-      setError('Unable to save project.');
+      // =================================================
+      // IMAGE UPLOAD ERROR
+      // =================================================
+
+      if (
+        err.config?.url?.includes('/image')
+      ) {
+        setError(
+          err.response?.data?.message ||
+            'Project was saved, but the image upload failed.'
+        );
+
+        return;
+      }
+
+      // =================================================
+      // GENERAL ERROR
+      // =================================================
+
+      setError(
+        err.response?.data?.message ||
+          err.message ||
+          'Unable to save project.'
+      );
+
     } finally {
       setSaving(false);
     }
   };
 
-  /* =========================
-     EDIT
-  ========================= */
+  // =====================================================
+  // EDIT PROJECT
+  // =====================================================
 
   const handleEdit = (project) => {
+    console.log(
+      'EDIT PROJECT:',
+      project
+    );
+
     setEditingId(project.id);
 
     setForm({
       title: project.title || '',
       category: project.category || '',
-      description: project.description || '',
-      imageUrl: project.imageUrl || '',
-      projectUrl: project.projectUrl || '',
-      technologies: project.technologies || '',
+      description:
+        project.description || '',
+      imageUrl:
+        project.imageUrl || '',
+      projectUrl:
+        project.projectUrl || '',
+      technologies:
+        project.technologies || '',
     });
+
+    // New image has not been selected
+    setSelectedImage(null);
+
+    // Show existing database image
+    if (project.imageUrl) {
+      setImagePreview(
+        getImageUrl(
+          project.imageUrl
+        )
+      );
+    } else {
+      setImagePreview('');
+    }
+
+    setError('');
 
     window.scrollTo({
       top: 0,
@@ -153,14 +596,15 @@ export default function AdminDashboard() {
     });
   };
 
-  /* =========================
-     DELETE
-  ========================= */
+  // =====================================================
+  // DELETE PROJECT
+  // =====================================================
 
   const handleDelete = async (id) => {
-    const confirmed = window.confirm(
-      'Are you sure you want to delete this project?'
-    );
+    const confirmed =
+      window.confirm(
+        'Are you sure you want to delete this project?'
+      );
 
     if (!confirmed) {
       return;
@@ -177,32 +621,58 @@ export default function AdminDashboard() {
       await loadProjects();
 
     } catch (err) {
-      console.error(err);
+      console.error(
+        'DELETE PROJECT ERROR:',
+        err
+      );
 
-      if (err.response?.status === 401) {
+      if (
+        err.response?.status === 401
+      ) {
         logout();
         return;
       }
 
-      if (err.response?.status === 403) {
+      if (
+        err.response?.status === 403
+      ) {
         setError(
           'You are not authorized to delete projects.'
         );
+
         return;
       }
 
-      setError('Unable to delete project.');
+      setError(
+        err.response?.data?.message ||
+          'Unable to delete project.'
+      );
     }
   };
 
-  /* =========================
-     CANCEL EDIT
-  ========================= */
+  // =====================================================
+  // CANCEL EDIT
+  // =====================================================
 
   const cancelEdit = () => {
     setEditingId(null);
+
     setForm(emptyProject);
+
+    setSelectedImage(null);
+
+    setImagePreview('');
+
     setError('');
+
+    const fileInput =
+      document.getElementById(
+        'project-image-input'
+      );
+
+    if (fileInput) {
+      fileInput.value = '';
+    }
 
     window.scrollTo({
       top: 0,
@@ -210,48 +680,73 @@ export default function AdminDashboard() {
     });
   };
 
-  /* =========================
-     LOGOUT
-  ========================= */
+  // =====================================================
+  // LOGOUT
+  // =====================================================
 
   const logout = () => {
-    localStorage.removeItem('adminToken');
-    localStorage.removeItem('adminUsername');
-    localStorage.removeItem('adminRole');
+    localStorage.removeItem(
+      'adminToken'
+    );
+
+    localStorage.removeItem(
+      'adminUsername'
+    );
+
+    localStorage.removeItem(
+      'adminRole'
+    );
 
     navigate('/admin/login');
   };
 
-  /* =========================
-     IMAGE URL
-  ========================= */
+  // =====================================================
+  // IMAGE URL
+  // =====================================================
 
   const getImageUrl = (imageUrl) => {
     if (!imageUrl) {
       return '';
     }
 
+    // Already complete URL
     if (
-      imageUrl.startsWith('http://') ||
-      imageUrl.startsWith('https://') ||
-      imageUrl.startsWith('data:')
+      imageUrl.startsWith(
+        'http://'
+      ) ||
+      imageUrl.startsWith(
+        'https://'
+      ) ||
+      imageUrl.startsWith(
+        'data:'
+      ) ||
+      imageUrl.startsWith(
+        'blob:'
+      )
     ) {
       return imageUrl;
     }
 
-    if (imageUrl.startsWith('/')) {
+    // Spring Boot upload path
+    if (
+      imageUrl.startsWith('/')
+    ) {
       return `http://localhost:8080${imageUrl}`;
     }
 
-    return imageUrl;
+    return `http://localhost:8080/${imageUrl}`;
   };
+
+  // =====================================================
+  // RENDER
+  // =====================================================
 
   return (
     <div style={styles.page}>
 
-      {/* =====================================
+      {/* =================================================
           TOP HEADER
-      ===================================== */}
+      ================================================= */}
 
       <header style={styles.header}>
 
@@ -277,7 +772,9 @@ export default function AdminDashboard() {
 
           <button
             type="button"
-            onClick={() => navigate('/')}
+            onClick={() =>
+              navigate('/')
+            }
             style={styles.websiteButton}
           >
             View Website ↗
@@ -296,19 +793,20 @@ export default function AdminDashboard() {
       </header>
 
 
-      {/* =====================================
-          MAIN CONTENT
-      ===================================== */}
+      {/* =================================================
+          MAIN
+      ================================================= */}
 
       <main style={styles.container}>
 
-        {/* =====================================
+        {/* =================================================
             PAGE INTRO
-        ===================================== */}
+        ================================================= */}
 
         <div style={styles.pageIntro}>
 
           <div>
+
             <div style={styles.eyebrow}>
               A-TECH ADMIN
             </div>
@@ -318,13 +816,19 @@ export default function AdminDashboard() {
             </h2>
 
             <p style={styles.pageDescription}>
-              Add, edit and manage the projects displayed
-              across your A-Tech portfolio.
+              Add, edit and manage the projects
+              displayed across your A-Tech portfolio.
             </p>
+
           </div>
 
           <div style={styles.projectCounter}>
-            <strong>
+
+            <strong
+              style={
+                styles.projectCounterStrong
+              }
+            >
               {projects.length}
             </strong>
 
@@ -333,14 +837,15 @@ export default function AdminDashboard() {
                 ? 'Project'
                 : 'Projects'}
             </span>
+
           </div>
 
         </div>
 
 
-        {/* =====================================
+        {/* =================================================
             ERROR
-        ===================================== */}
+        ================================================= */}
 
         {error && (
           <div style={styles.error}>
@@ -350,9 +855,9 @@ export default function AdminDashboard() {
         )}
 
 
-        {/* =====================================
+        {/* =================================================
             PROJECT FORM
-        ===================================== */}
+        ================================================= */}
 
         <section style={styles.formCard}>
 
@@ -360,7 +865,11 @@ export default function AdminDashboard() {
 
             <div>
 
-              <div style={styles.sectionEyebrow}>
+              <div
+                style={
+                  styles.sectionEyebrow
+                }
+              >
                 PROJECT MANAGEMENT
               </div>
 
@@ -370,7 +879,11 @@ export default function AdminDashboard() {
                   : 'Add New Project'}
               </h2>
 
-              <p style={styles.sectionDescription}>
+              <p
+                style={
+                  styles.sectionDescription
+                }
+              >
                 {editingId
                   ? 'Update the selected project details.'
                   : 'Add a new project to your A-Tech portfolio.'}
@@ -379,7 +892,11 @@ export default function AdminDashboard() {
             </div>
 
             {editingId && (
-              <div style={styles.editBadge}>
+              <div
+                style={
+                  styles.editBadge
+                }
+              >
                 EDITING PROJECT
               </div>
             )}
@@ -391,9 +908,12 @@ export default function AdminDashboard() {
 
             <div style={styles.grid}>
 
-              {/* TITLE */}
+              {/* =================================================
+                  TITLE
+              ================================================= */}
 
               <div>
+
                 <label style={styles.label}>
                   Project Title
                 </label>
@@ -406,12 +926,16 @@ export default function AdminDashboard() {
                   required
                   style={styles.input}
                 />
+
               </div>
 
 
-              {/* CATEGORY */}
+              {/* =================================================
+                  CATEGORY
+              ================================================= */}
 
               <div>
+
                 <label style={styles.label}>
                   Category
                 </label>
@@ -424,10 +948,13 @@ export default function AdminDashboard() {
                   required
                   style={styles.input}
                 />
+
               </div>
 
 
-              {/* DESCRIPTION */}
+              {/* =================================================
+                  DESCRIPTION
+              ================================================= */}
 
               <div style={styles.fullWidth}>
 
@@ -448,30 +975,137 @@ export default function AdminDashboard() {
               </div>
 
 
-              {/* IMAGE URL */}
+              {/* =================================================
+                  PROJECT IMAGE
+              ================================================= */}
 
-              <div>
+              <div style={styles.fullWidth}>
 
                 <label style={styles.label}>
-                  Image URL
+                  Project Image
                 </label>
 
-                <input
-                  name="imageUrl"
-                  value={form.imageUrl}
-                  onChange={handleChange}
-                  placeholder="https://example.com/project.jpg"
-                  style={styles.input}
-                />
+                <div
+                  style={{
+                    ...styles.dropZone,
+                    ...(imagePreview
+                      ? styles.dropZoneWithImage
+                      : {}),
+                  }}
 
-                <small style={styles.helper}>
-                  Use a complete image URL.
-                </small>
+                  onDragOver={handleDragOver}
+
+                  onDragLeave={handleDragLeave}
+
+                  onDrop={(e) => {
+                    e.preventDefault();
+
+                    e.currentTarget.style.borderColor =
+                      '#d8ceda';
+
+                    e.currentTarget.style.background =
+                      '#faf8fb';
+
+                    handleImageDrop(e);
+                  }}
+
+                  onClick={() =>
+                    document
+                      .getElementById(
+                        'project-image-input'
+                      )
+                      ?.click()
+                  }
+                >
+
+                  <input
+                    id="project-image-input"
+                    type="file"
+                    accept="image/png,image/jpeg,image/jpg,image/webp"
+                    onChange={handleImageChange}
+                    style={{
+                      display: 'none',
+                    }}
+                  />
+
+                  {imagePreview ? (
+
+                    <div
+                      style={
+                        styles.imagePreviewContainer
+                      }
+                    >
+
+                      <img
+                        src={imagePreview}
+                        alt="Project preview"
+                        style={
+                          styles.imagePreview
+                        }
+                      />
+
+                      <div
+                        style={
+                          styles.imagePreviewOverlay
+                        }
+                      >
+                        Click to change image
+                      </div>
+
+                    </div>
+
+                  ) : (
+
+                    <div
+                      style={
+                        styles.uploadContent
+                      }
+                    >
+
+                      <div
+                        style={
+                          styles.uploadIcon
+                        }
+                      >
+                        ↑
+                      </div>
+
+                      <strong
+                        style={
+                          styles.uploadTitle
+                        }
+                      >
+                        Drag & drop your project image
+                      </strong>
+
+                      <span
+                        style={
+                          styles.uploadText
+                        }
+                      >
+                        or click to choose from your computer
+                      </span>
+
+                      <small
+                        style={
+                          styles.uploadHelper
+                        }
+                      >
+                        PNG, JPG, JPEG, WEBP • Maximum 10 MB
+                      </small>
+
+                    </div>
+
+                  )}
+
+                </div>
 
               </div>
 
 
-              {/* PROJECT URL */}
+              {/* =================================================
+                  PROJECT URL
+              ================================================= */}
 
               <div>
 
@@ -490,9 +1124,11 @@ export default function AdminDashboard() {
               </div>
 
 
-              {/* TECHNOLOGIES */}
+              {/* =================================================
+                  TECHNOLOGIES
+              ================================================= */}
 
-              <div style={styles.fullWidth}>
+              <div>
 
                 <label style={styles.label}>
                   Technologies / Tags
@@ -515,7 +1151,9 @@ export default function AdminDashboard() {
             </div>
 
 
-            {/* FORM BUTTONS */}
+            {/* =================================================
+                BUTTONS
+            ================================================= */}
 
             <div style={styles.actions}>
 
@@ -534,7 +1172,12 @@ export default function AdminDashboard() {
                 disabled={saving}
                 style={{
                   ...styles.saveButton,
-                  opacity: saving ? 0.65 : 1,
+                  opacity: saving
+                    ? 0.65
+                    : 1,
+                  cursor: saving
+                    ? 'not-allowed'
+                    : 'pointer',
                 }}
               >
                 {saving
@@ -551,9 +1194,9 @@ export default function AdminDashboard() {
         </section>
 
 
-        {/* =====================================
+        {/* =================================================
             PROJECT LIST
-        ===================================== */}
+        ================================================= */}
 
         <section style={styles.listSection}>
 
@@ -561,7 +1204,11 @@ export default function AdminDashboard() {
 
             <div>
 
-              <div style={styles.sectionEyebrow}>
+              <div
+                style={
+                  styles.sectionEyebrow
+                }
+              >
                 PORTFOLIO
               </div>
 
@@ -569,15 +1216,18 @@ export default function AdminDashboard() {
                 Projects
               </h2>
 
-              <p style={styles.sectionDescription}>
+              <p
+                style={
+                  styles.sectionDescription
+                }
+              >
                 Projects currently stored in your database.
               </p>
 
             </div>
 
             <div style={styles.countBadge}>
-              {projects.length}
-              {' '}
+              {projects.length}{' '}
               {projects.length === 1
                 ? 'Project'
                 : 'Projects'}
@@ -586,11 +1236,14 @@ export default function AdminDashboard() {
           </div>
 
 
-          {/* LOADING */}
+          {/* =================================================
+              LOADING
+          ================================================= */}
 
           {loading ? (
 
             <div style={styles.message}>
+
               <div style={styles.loader}>
                 Loading
               </div>
@@ -598,15 +1251,22 @@ export default function AdminDashboard() {
               <p>
                 Loading projects...
               </p>
+
             </div>
 
           ) : projects.length === 0 ? (
 
-            /* EMPTY */
+            <div
+              style={
+                styles.emptyState
+              }
+            >
 
-            <div style={styles.emptyState}>
-
-              <div style={styles.emptyIcon}>
+              <div
+                style={
+                  styles.emptyIcon
+                }
+              >
                 +
               </div>
 
@@ -622,138 +1282,251 @@ export default function AdminDashboard() {
 
           ) : (
 
-            /* PROJECT GRID */
+            <div
+              style={
+                styles.projectGrid
+              }
+            >
 
-            <div style={styles.projectGrid}>
+              {projects.map(
+                (project) => (
 
-              {projects.map((project) => (
+                  <article
+                    key={project.id}
+                    style={
+                      styles.projectCard
+                    }
+                  >
 
-                <article
-                  key={project.id}
-                  style={styles.projectCard}
-                >
-
-                  {/* IMAGE */}
-
-                  <div style={styles.imageWrapper}>
-
-                    {project.imageUrl ? (
-
-                      <img
-                        src={getImageUrl(project.imageUrl)}
-                        alt={project.title}
-                        style={styles.projectImage}
-                        onError={(e) => {
-                          e.currentTarget.style.display =
-                            'none';
-
-                          e.currentTarget.nextSibling.style.display =
-                            'flex';
-                        }}
-                      />
-
-                    ) : null}
+                    {/* =========================================
+                        IMAGE
+                    ========================================= */}
 
                     <div
-                      style={{
-                        ...styles.imagePlaceholder,
-                        display: project.imageUrl
-                          ? 'none'
-                          : 'flex',
-                      }}
+                      style={
+                        styles.imageWrapper
+                      }
                     >
-                      NO IMAGE
+
+                      {project.imageUrl ? (
+
+                        <img
+                          src={getImageUrl(
+                            project.imageUrl
+                          )}
+                          alt={
+                            project.title
+                          }
+                          style={
+                            styles.projectImage
+                          }
+
+                          onLoad={() => {
+                            console.log(
+                              'PROJECT IMAGE LOADED:',
+                              project.imageUrl
+                            );
+                          }}
+
+                          onError={(e) => {
+                            console.error(
+                              'PROJECT IMAGE FAILED TO LOAD:',
+                              project.imageUrl
+                            );
+
+                            console.error(
+                              'FULL IMAGE URL:',
+                              getImageUrl(
+                                project.imageUrl
+                              )
+                            );
+
+                            e.currentTarget.style.display =
+                              'none';
+
+                            if (
+                              e.currentTarget
+                                .nextSibling
+                            ) {
+                              e.currentTarget
+                                .nextSibling
+                                .style.display =
+                                'flex';
+                            }
+                          }}
+                        />
+
+                      ) : null}
+
+
+                      <div
+                        style={{
+                          ...styles.imagePlaceholder,
+
+                          display:
+                            project.imageUrl
+                              ? 'none'
+                              : 'flex',
+                        }}
+                      >
+                        NO IMAGE
+                      </div>
+
+
+                      <div
+                        style={
+                          styles.projectNumber
+                        }
+                      >
+                        #{project.id}
+                      </div>
+
                     </div>
 
-                    <div style={styles.projectNumber}>
-                      #{project.id}
-                    </div>
 
-                  </div>
+                    {/* =========================================
+                        CONTENT
+                    ========================================= */}
 
+                    <div
+                      style={
+                        styles.projectContent
+                      }
+                    >
 
-                  {/* CONTENT */}
-
-                  <div style={styles.projectContent}>
-
-                    <small style={styles.category}>
-                      {project.category}
-                    </small>
-
-                    <h3 style={styles.projectTitle}>
-                      {project.title}
-                    </h3>
-
-                    <p style={styles.description}>
-                      {project.description}
-                    </p>
+                      <small
+                        style={
+                          styles.category
+                        }
+                      >
+                        {project.category}
+                      </small>
 
 
-                    {/* TECHNOLOGIES */}
+                      <h3
+                        style={
+                          styles.projectTitle
+                        }
+                      >
+                        {project.title}
+                      </h3>
 
-                    {project.technologies && (
-                      <div style={styles.tags}>
 
-                        {project.technologies
-                          .split(',')
-                          .map((technology, index) => (
+                      <p
+                        style={
+                          styles.description
+                        }
+                      >
+                        {project.description}
+                      </p>
 
-                            <span
-                              key={`${technology}-${index}`}
-                              style={styles.tag}
-                            >
-                              {technology.trim()}
-                            </span>
 
-                          ))}
+                      {/* =========================================
+                          TECHNOLOGIES
+                      ========================================= */}
+
+                      {project.technologies && (
+
+                        <div
+                          style={
+                            styles.tags
+                          }
+                        >
+
+                          {project.technologies
+                            .split(',')
+                            .map(
+                              (
+                                technology,
+                                index
+                              ) => (
+
+                                <span
+                                  key={`${technology}-${index}`}
+                                  style={
+                                    styles.tag
+                                  }
+                                >
+                                  {technology.trim()}
+                                </span>
+
+                              )
+                            )}
+
+                        </div>
+
+                      )}
+
+
+                      {/* =========================================
+                          PROJECT URL
+                      ========================================= */}
+
+                      {project.projectUrl && (
+
+                        <a
+                          href={
+                            project.projectUrl
+                          }
+                          target="_blank"
+                          rel="noreferrer"
+                          style={
+                            styles.projectLink
+                          }
+                        >
+                          View Project ↗
+                        </a>
+
+                      )}
+
+
+                      {/* =========================================
+                          ACTIONS
+                      ========================================= */}
+
+                      <div
+                        style={
+                          styles.cardActions
+                        }
+                      >
+
+                        <button
+                          type="button"
+                          onClick={() =>
+                            handleEdit(
+                              project
+                            )
+                          }
+                          style={
+                            styles.editButton
+                          }
+                        >
+                          Edit
+                        </button>
+
+
+                        <button
+                          type="button"
+                          onClick={() =>
+                            handleDelete(
+                              project.id
+                            )
+                          }
+                          style={
+                            styles.deleteButton
+                          }
+                        >
+                          Delete
+                        </button>
 
                       </div>
-                    )}
-
-
-                    {/* URL */}
-
-                    {project.projectUrl && (
-                      <a
-                        href={project.projectUrl}
-                        target="_blank"
-                        rel="noreferrer"
-                        style={styles.projectLink}
-                      >
-                        View Project ↗
-                      </a>
-                    )}
-
-
-                    {/* ACTIONS */}
-
-                    <div style={styles.cardActions}>
-
-                      <button
-                        type="button"
-                        onClick={() => handleEdit(project)}
-                        style={styles.editButton}
-                      >
-                        Edit
-                      </button>
-
-                      <button
-                        type="button"
-                        onClick={() =>
-                          handleDelete(project.id)
-                        }
-                        style={styles.deleteButton}
-                      >
-                        Delete
-                      </button>
 
                     </div>
 
-                  </div>
+                  </article>
 
-                </article>
-
-              ))}
+                )
+              )}
 
             </div>
 
@@ -768,11 +1541,15 @@ export default function AdminDashboard() {
 }
 
 
-/* =====================================================
+/* =========================================================
    A-TECH ADMIN STYLES
-===================================================== */
+========================================================= */
 
 const styles = {
+
+  /* =====================================================
+     PAGE
+  ===================================================== */
 
   page: {
     minHeight: '100vh',
@@ -786,9 +1563,9 @@ const styles = {
   },
 
 
-  /* =========================
+  /* =====================================================
      HEADER
-  ========================= */
+  ===================================================== */
 
   header: {
     maxWidth: '1400px',
@@ -862,13 +1639,15 @@ const styles = {
 
 
   websiteButton: {
-    border: '1px solid rgba(255,255,255,0.25)',
+    border:
+      '1px solid rgba(255,255,255,0.25)',
 
     borderRadius: '30px',
 
     padding: '12px 20px',
 
-    background: 'rgba(255,255,255,0.08)',
+    background:
+      'rgba(255,255,255,0.08)',
 
     color: '#ffffff',
 
@@ -900,9 +1679,9 @@ const styles = {
   },
 
 
-  /* =========================
+  /* =====================================================
      MAIN
-  ========================= */
+  ===================================================== */
 
   container: {
     maxWidth: '1400px',
@@ -978,7 +1757,8 @@ const styles = {
 
     borderRadius: '18px',
 
-    background: 'rgba(255,255,255,0.08)',
+    background:
+      'rgba(255,255,255,0.08)',
 
     border:
       '1px solid rgba(255,255,255,0.12)',
@@ -993,12 +1773,18 @@ const styles = {
 
   projectCounterStrong: {
     color: '#ffffff',
+
+    fontSize: '30px',
+
+    lineHeight: 1,
+
+    marginBottom: '5px',
   },
 
 
-  /* =========================
+  /* =====================================================
      ERROR
-  ========================= */
+  ===================================================== */
 
   error: {
     display: 'flex',
@@ -1007,7 +1793,8 @@ const styles = {
 
     gap: '10px',
 
-    background: 'rgba(255, 80, 100, 0.14)',
+    background:
+      'rgba(255, 80, 100, 0.14)',
 
     border:
       '1px solid rgba(255, 120, 140, 0.25)',
@@ -1022,12 +1809,13 @@ const styles = {
   },
 
 
-  /* =========================
+  /* =====================================================
      CARDS
-  ========================= */
+  ===================================================== */
 
   formCard: {
-    background: 'rgba(255,255,255,0.98)',
+    background:
+      'rgba(255,255,255,0.98)',
 
     borderRadius: '24px',
 
@@ -1043,7 +1831,8 @@ const styles = {
 
 
   listSection: {
-    background: 'rgba(255,255,255,0.98)',
+    background:
+      'rgba(255,255,255,0.98)',
 
     borderRadius: '24px',
 
@@ -1147,9 +1936,9 @@ const styles = {
   },
 
 
-  /* =========================
+  /* =====================================================
      FORM
-  ========================= */
+  ===================================================== */
 
   grid: {
     display: 'grid',
@@ -1240,6 +2029,159 @@ const styles = {
   },
 
 
+  /* =====================================================
+     IMAGE DROP ZONE
+  ===================================================== */
+
+  dropZone: {
+    width: '100%',
+
+    minHeight: '230px',
+
+    boxSizing: 'border-box',
+
+    border:
+      '2px dashed #d8ceda',
+
+    borderRadius: '16px',
+
+    background: '#faf8fb',
+
+    display: 'flex',
+
+    alignItems: 'center',
+
+    justifyContent: 'center',
+
+    cursor: 'pointer',
+
+    transition:
+      'border-color 0.2s ease, background 0.2s ease',
+
+    overflow: 'hidden',
+  },
+
+
+  dropZoneWithImage: {
+    padding: 0,
+  },
+
+
+  uploadContent: {
+    display: 'flex',
+
+    flexDirection: 'column',
+
+    alignItems: 'center',
+
+    justifyContent: 'center',
+
+    textAlign: 'center',
+
+    padding: '35px',
+  },
+
+
+  uploadIcon: {
+    width: '52px',
+
+    height: '52px',
+
+    marginBottom: '15px',
+
+    borderRadius: '50%',
+
+    display: 'flex',
+
+    alignItems: 'center',
+
+    justifyContent: 'center',
+
+    background: '#f5e5f2',
+
+    color: '#963b80',
+
+    fontSize: '26px',
+
+    fontWeight: '700',
+  },
+
+
+  uploadTitle: {
+    color: '#302a38',
+
+    fontSize: '17px',
+
+    fontWeight: '600',
+  },
+
+
+  uploadText: {
+    marginTop: '7px',
+
+    color: '#817888',
+
+    fontSize: '14px',
+  },
+
+
+  uploadHelper: {
+    marginTop: '12px',
+
+    color: '#aaa1ad',
+
+    fontSize: '12px',
+  },
+
+
+  imagePreviewContainer: {
+    position: 'relative',
+
+    width: '100%',
+
+    height: '280px',
+  },
+
+
+  imagePreview: {
+    width: '100%',
+
+    height: '100%',
+
+    objectFit: 'cover',
+
+    display: 'block',
+  },
+
+
+  imagePreviewOverlay: {
+    position: 'absolute',
+
+    left: 0,
+
+    right: 0,
+
+    bottom: 0,
+
+    padding: '15px',
+
+    textAlign: 'center',
+
+    background:
+      'linear-gradient(transparent, rgba(20,7,28,0.82))',
+
+    color: '#ffffff',
+
+    fontSize: '14px',
+
+    fontWeight: '500',
+  },
+
+
+  /* =====================================================
+     BUTTONS
+  ===================================================== */
+
   actions: {
     display: 'flex',
 
@@ -1289,9 +2231,9 @@ const styles = {
   },
 
 
-  /* =========================
+  /* =====================================================
      PROJECT GRID
-  ========================= */
+  ===================================================== */
 
   projectGrid: {
     display: 'grid',
@@ -1377,7 +2319,8 @@ const styles = {
 
     borderRadius: '20px',
 
-    background: 'rgba(20,7,28,0.72)',
+    background:
+      'rgba(20,7,28,0.72)',
 
     color: '#ffffff',
 
@@ -1516,9 +2459,9 @@ const styles = {
   },
 
 
-  /* =========================
+  /* =====================================================
      STATES
-  ========================= */
+  ===================================================== */
 
   message: {
     padding: '70px 30px',
