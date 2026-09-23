@@ -219,7 +219,7 @@ export default function LeadForm({ selectedServices = [] }) {
                             "Your idea",
                             "Your required solution",
                             "Your expected timeline",
-                            "Your approximate budget",
+
                         ].map((item) => (
                             <div key={item}>
                                 <CheckCircle2 size={16} />
@@ -231,18 +231,24 @@ export default function LeadForm({ selectedServices = [] }) {
                     <div className="contact-meta">
                         <span>
                             <Mail size={17} />
-                            Email placeholder
+                            ashasvitech@gmail.com
                         </span>
 
                         <span>
                             <Phone size={17} />
-                            Phone placeholder
+                            +919772733319
                         </span>
 
                         <span>
                             <MapPin size={17} />
-                            India
+                            Plot No E-90,
+                            eden garden ,sikar road , Rajawas, jaipur , rajeshtan, India 302013
                         </span>
+                        <span>
+                                                    <MapPin size={17} />
+                                                   Plot no - 1,2
+                                                   Om plaza , vinobha margh, kings road, nirman nagar , jaipur, rajeshtan, India  302019
+                                                </span>
                     </div>
                 </div>
 

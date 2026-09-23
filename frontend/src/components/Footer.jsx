@@ -52,7 +52,10 @@ export default function Footer()  {
 <h4>Contact</h4>
 <span>ashasvitech@gmail.com</span>
 <span>+919772733319</span>
-<span>India</span>
+<span>Plot No E-90,
+      eden garden ,sikar road , Rajawas, jaipur , rajeshtan, India 302013</span>
+      <span>Plot no - 1,2
+            Om plaza , vinobha margh, kings road, nirman nagar , jaipur, rajeshtan, India 302019 </span>
 </div>
 </div>
 <div className="footer-bottom">
