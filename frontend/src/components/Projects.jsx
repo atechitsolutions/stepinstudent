@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 
 import ProjectCard from './ProjectCard';
@@ -6,18 +6,35 @@ import { projects as staticProjects } from '../data/projects';
 
 const API_URL = 'http://localhost:8080/api/projects';
 
-export default function Projects() {
-  const carouselRef = useRef(null);
+const AUTO_SLIDE_TIME = 4000;
+const ANIMATION_TIME = 800;
 
+export default function Projects() {
   // =====================================================
   // DATABASE PROJECTS
   // =====================================================
 
   const [databaseProjects, setDatabaseProjects] = useState([]);
 
-  const [slideWidth, setSlideWidth] = useState(0);
+  // =====================================================
+  // CURRENT ROTATION
+  //
+  // Example:
+  //
+  // 0 → [1, 2, 3]
+  // 1 → [2, 3, 1]
+  // 2 → [3, 1, 2]
+  // 3 → [1, 2, 3]
+  //
+  // =====================================================
 
-  const [isTransitioning, setIsTransitioning] = useState(true);
+  const [rotation, setRotation] = useState(0);
+
+  // =====================================================
+  // ANIMATION STATE
+  // =====================================================
+
+  const [isAnimating, setIsAnimating] = useState(false);
 
   // =====================================================
   // LOAD PROJECTS FROM SPRING BOOT
@@ -51,33 +68,47 @@ export default function Projects() {
   // TO EXISTING PROJECT CARD FORMAT
   // =====================================================
 
-  const formattedDatabaseProjects = databaseProjects.map(
-    (project) => ({
+  const formattedDatabaseProjects =
+    databaseProjects.map((project) => ({
       id: `db-${project.id}`,
 
-      title: project.title || 'Untitled Project',
+      title:
+        project.title ||
+        'Untitled Project',
 
-      category: project.category || 'Project',
+      category:
+        project.category ||
+        'Project',
 
-      description: project.description || '',
+      description:
+        project.description ||
+        '',
 
-      image: getImageUrl(project.imageUrl),
+      image:
+        getImageUrl(
+          project.imageUrl
+        ),
 
-      url: project.projectUrl || '#',
+      url:
+        project.projectUrl ||
+        '#',
 
-      tags: project.technologies
-        ? project.technologies
-            .split(',')
-            .map((technology) => technology.trim())
-            .filter(Boolean)
-        : [],
+      tags:
+        project.technologies
+          ? project.technologies
+              .split(',')
+              .map(
+                (technology) =>
+                  technology.trim()
+              )
+              .filter(Boolean)
+          : [],
 
       accent: '#a43b8c',
-    })
-  );
+    }));
 
   // =====================================================
-  // COMBINE EXISTING + DATABASE PROJECTS
+  // COMBINE STATIC + DATABASE PROJECTS
   // =====================================================
 
   const allProjects = [
@@ -88,72 +119,13 @@ export default function Projects() {
   const total = allProjects.length;
 
   // =====================================================
-  // LOOP PROJECTS
-  // =====================================================
-
-  const loopProjects =
-    total > 0
-      ? [
-          ...allProjects,
-          ...allProjects,
-          ...allProjects,
-        ]
-      : [];
-
-  // =====================================================
-  // START FROM MIDDLE COPY
-  // =====================================================
-
-  const [currentIndex, setCurrentIndex] = useState(total);
-
-  // =====================================================
-  // CALCULATE CARD WIDTH
+  // RESET ROTATION IF PROJECT COUNT CHANGES
   //
-  // DESKTOP  = 3 cards
-  // MOBILE   = 1 card
+  // This is important when a new project is added.
   // =====================================================
 
   useEffect(() => {
-    const updateWidth = () => {
-      if (!carouselRef.current) return;
-
-      const carouselWidth =
-        carouselRef.current.clientWidth;
-
-      if (window.innerWidth <= 768) {
-        // MOBILE
-        // One complete project card
-        setSlideWidth(carouselWidth);
-      } else {
-        // DESKTOP
-        // Keep existing 3-card layout
-        setSlideWidth(carouselWidth / 3);
-      }
-    };
-
-    updateWidth();
-
-    window.addEventListener(
-      'resize',
-      updateWidth
-    );
-
-    return () => {
-      window.removeEventListener(
-        'resize',
-        updateWidth
-      );
-    };
-  }, []);
-
-  // =====================================================
-  // KEEP INDEX CORRECT WHEN PROJECT COUNT CHANGES
-  // =====================================================
-
-  useEffect(() => {
-    if (total > 0) {
-      setCurrentIndex(total);
-    }
+    setRotation(0);
   }, [total]);
 
   // =====================================================
@@ -161,47 +133,119 @@ export default function Projects() {
   // =====================================================
 
   useEffect(() => {
-    if (total === 0) return;
+    if (total <= 1) {
+      return;
+    }
 
     const timer = setInterval(() => {
-      setCurrentIndex(
-        (prev) => prev + 1
-      );
-    }, 4000);
+      moveNext();
+    }, AUTO_SLIDE_TIME);
 
-    return () => clearInterval(timer);
+    return () => {
+      clearInterval(timer);
+    };
   }, [total]);
 
   // =====================================================
-  // SEAMLESS RESET
+  // MOVE TO NEXT PROJECT
   // =====================================================
 
-  useEffect(() => {
-    if (total === 0) return;
-
-    if (currentIndex === total * 2) {
-      const timeout = setTimeout(() => {
-        setIsTransitioning(false);
-
-        setCurrentIndex(total);
-
-        requestAnimationFrame(() => {
-          requestAnimationFrame(() => {
-            setIsTransitioning(true);
-          });
-        });
-      }, 850);
-
-      return () => clearTimeout(timeout);
+  const moveNext = () => {
+    if (isAnimating || total <= 1) {
+      return;
     }
-  }, [currentIndex, total]);
+
+    setIsAnimating(true);
+
+    /*
+      First animate the cards.
+
+      After animation finishes,
+      change the actual order.
+    */
+
+    setTimeout(() => {
+      setRotation(
+        (previousRotation) =>
+          (previousRotation + 1) %
+          total
+      );
+
+      setIsAnimating(false);
+    }, ANIMATION_TIME);
+  };
 
   // =====================================================
-  // TRANSLATION
+  // MOVE TO SPECIFIC PROJECT
   // =====================================================
 
-  const translateX =
-    currentIndex * slideWidth;
+  const goToProject = (index) => {
+    if (
+      isAnimating ||
+      total <= 1
+    ) {
+      return;
+    }
+
+    setRotation(index);
+  };
+
+  // =====================================================
+  // CREATE VISIBLE PROJECTS
+  //
+  // Example with:
+  //
+  // [1, 2, 3, 4, 5]
+  //
+  // rotation = 0
+  // [1, 2, 3]
+  //
+  // rotation = 1
+  // [2, 3, 4]
+  //
+  // rotation = 2
+  // [3, 4, 5]
+  //
+  // rotation = 3
+  // [4, 5, 1]
+  //
+  // rotation = 4
+  // [5, 1, 2]
+  //
+  // =====================================================
+
+  const getVisibleProjects = () => {
+    if (total === 0) {
+      return [];
+    }
+
+    // MOBILE will only display the first one
+    // through CSS.
+
+    const visibleCount =
+      Math.min(3, total);
+
+    const visibleProjects = [];
+
+    for (
+      let i = 0;
+      i < visibleCount;
+      i++
+    ) {
+      const projectIndex =
+        (rotation + i) %
+        total;
+
+      visibleProjects.push(
+        allProjects[projectIndex]
+      );
+    }
+
+    return visibleProjects;
+  };
+
+  const visibleProjects =
+    getVisibleProjects();
 
   // =====================================================
   // RENDER
@@ -214,10 +258,13 @@ export default function Projects() {
     >
       <div className="container">
 
-        {/* HEADER */}
+        {/* =================================================
+            HEADER
+            ================================================= */}
 
         <div className="section-head">
           <div>
+
             <div className="eyebrow dark">
               OUR ACHIEVEMENTS
             </div>
@@ -225,61 +272,66 @@ export default function Projects() {
             <h2>
               Built For Real Digital Experiences.
             </h2>
+
           </div>
         </div>
 
-        {/* CAROUSEL */}
+        {/* =================================================
+            PROJECT CAROUSEL
+            ================================================= */}
 
-        <div
-          className="project-carousel"
-          ref={carouselRef}
-        >
-          {total > 0 ? (
-            <div
-              className="project-track"
-              style={{
-                transform: `translate3d(-${translateX}px, 0, 0)`,
+        {total > 0 ? (
+          <div
+            className={`project-carousel ${
+              isAnimating
+                ? 'is-animating'
+                : ''
+            }`}
+          >
 
-                transition: isTransitioning
-                  ? 'transform 0.8s cubic-bezier(0.22, 1, 0.36, 1)'
-                  : 'none',
-              }}
-            >
-              {loopProjects.map(
+            <div className="project-track">
+
+              {visibleProjects.map(
                 (project, index) => (
                   <div
-                    className="project-slide"
-                    key={`${project.id}-${index}`}
-                    style={{
-                      width: `${slideWidth}px`,
-                      minWidth: `${slideWidth}px`,
-                      maxWidth: `${slideWidth}px`,
-                    }}
+                    className={`project-slide ${
+                      index === 0
+                        ? 'slide-first'
+                        : ''
+                    }`}
+                    key={project.id}
                   >
+
                     <ProjectCard
                       project={project}
                     />
+
                   </div>
                 )
               )}
-            </div>
-          ) : (
-            <div
-              style={{
-                width: '100%',
-                padding: '60px 20px',
-                textAlign: 'center',
-              }}
-            >
-              Loading projects...
-            </div>
-          )}
-        </div>
 
-        {/* DOTS */}
+            </div>
 
-        {total > 0 && (
+          </div>
+        ) : (
+          <div
+            style={{
+              width: '100%',
+              padding: '60px 20px',
+              textAlign: 'center',
+            }}
+          >
+            Loading projects...
+          </div>
+        )}
+
+        {/* =================================================
+            DOTS
+            ================================================= */}
+
+        {total > 1 && (
           <div className="project-dots">
+
             {allProjects.map(
               (project, index) => (
                 <button
@@ -287,23 +339,20 @@ export default function Projects() {
                   type="button"
 
                   className={
-                    currentIndex % total === index
+                    rotation === index
                       ? 'active'
                       : ''
                   }
 
-                  onClick={() => {
-                    setIsTransitioning(true);
-
-                    setCurrentIndex(
-                      total + index
-                    );
-                  }}
+                  onClick={() =>
+                    goToProject(index)
+                  }
 
                   aria-label={`Show ${project.title}`}
                 />
               )
             )}
+
           </div>
         )}
 
@@ -311,6 +360,7 @@ export default function Projects() {
     </section>
   );
 }
+
 
 // =====================================================
 // IMAGE URL HELPER
@@ -323,15 +373,23 @@ function getImageUrl(imageUrl) {
 
   // Already a complete URL
   if (
-    imageUrl.startsWith('http://') ||
-    imageUrl.startsWith('https://') ||
-    imageUrl.startsWith('data:')
+    imageUrl.startsWith(
+      'http://'
+    ) ||
+    imageUrl.startsWith(
+      'https://'
+    ) ||
+    imageUrl.startsWith(
+      'data:'
+    )
   ) {
     return imageUrl;
   }
 
   // Spring Boot uploaded image
-  if (imageUrl.startsWith('/')) {
+  if (
+    imageUrl.startsWith('/')
+  ) {
     return `http://localhost:8080${imageUrl}`;
   }
 
