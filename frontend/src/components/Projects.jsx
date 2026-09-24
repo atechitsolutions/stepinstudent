@@ -37,8 +37,8 @@ export default function Projects() {
           error
         );
 
-        // Static projects will continue working
-        // even if the backend is unavailable.
+        // Static projects continue working
+        // even if backend is unavailable.
         setDatabaseProjects([]);
       }
     };
@@ -59,8 +59,7 @@ export default function Projects() {
 
       category: project.category || 'Project',
 
-      description:
-        project.description || '',
+      description: project.description || '',
 
       image: getImageUrl(project.imageUrl),
 
@@ -73,8 +72,6 @@ export default function Projects() {
             .filter(Boolean)
         : [],
 
-      // Existing ProjectCard expects accent.
-      // Give database projects a default accent.
       accent: '#a43b8c',
     })
   );
@@ -110,7 +107,10 @@ export default function Projects() {
   const [currentIndex, setCurrentIndex] = useState(total);
 
   // =====================================================
-  // CALCULATE EXACT CARD WIDTH
+  // CALCULATE CARD WIDTH
+  //
+  // DESKTOP  = 3 cards
+  // MOBILE   = 1 card
   // =====================================================
 
   useEffect(() => {
@@ -120,12 +120,23 @@ export default function Projects() {
       const carouselWidth =
         carouselRef.current.clientWidth;
 
-      setSlideWidth(carouselWidth / 3);
+      if (window.innerWidth <= 768) {
+        // MOBILE
+        // One complete project card
+        setSlideWidth(carouselWidth);
+      } else {
+        // DESKTOP
+        // Keep existing 3-card layout
+        setSlideWidth(carouselWidth / 3);
+      }
     };
 
     updateWidth();
 
-    window.addEventListener('resize', updateWidth);
+    window.addEventListener(
+      'resize',
+      updateWidth
+    );
 
     return () => {
       window.removeEventListener(
@@ -153,7 +164,9 @@ export default function Projects() {
     if (total === 0) return;
 
     const timer = setInterval(() => {
-      setCurrentIndex((prev) => prev + 1);
+      setCurrentIndex(
+        (prev) => prev + 1
+      );
     }, 4000);
 
     return () => clearInterval(timer);
@@ -204,9 +217,7 @@ export default function Projects() {
         {/* HEADER */}
 
         <div className="section-head">
-
           <div>
-
             <div className="eyebrow dark">
               OUR ACHIEVEMENTS
             </div>
@@ -214,11 +225,8 @@ export default function Projects() {
             <h2>
               Built For Real Digital Experiences.
             </h2>
-
           </div>
-
         </div>
-
 
         {/* CAROUSEL */}
 
@@ -226,9 +234,7 @@ export default function Projects() {
           className="project-carousel"
           ref={carouselRef}
         >
-
           {total > 0 ? (
-
             <div
               className="project-track"
               style={{
@@ -239,10 +245,8 @@ export default function Projects() {
                   : 'none',
               }}
             >
-
               {loopProjects.map(
                 (project, index) => (
-
                   <div
                     className="project-slide"
                     key={`${project.id}-${index}`}
@@ -252,20 +256,14 @@ export default function Projects() {
                       maxWidth: `${slideWidth}px`,
                     }}
                   >
-
                     <ProjectCard
                       project={project}
                     />
-
                   </div>
-
                 )
               )}
-
             </div>
-
           ) : (
-
             <div
               style={{
                 width: '100%',
@@ -275,21 +273,15 @@ export default function Projects() {
             >
               Loading projects...
             </div>
-
           )}
-
         </div>
-
 
         {/* DOTS */}
 
         {total > 0 && (
-
           <div className="project-dots">
-
             {allProjects.map(
               (project, index) => (
-
                 <button
                   key={project.id}
                   type="button"
@@ -310,19 +302,15 @@ export default function Projects() {
 
                   aria-label={`Show ${project.title}`}
                 />
-
               )
             )}
-
           </div>
-
         )}
 
       </div>
     </section>
   );
 }
-
 
 // =====================================================
 // IMAGE URL HELPER

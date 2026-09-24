@@ -1303,7 +1303,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
 .back-top {
   position:fixed;
   z-index:900;
-  left:22px;
+  right:22px;
   bottom:22px;
   width:42px;
   height:42px;
