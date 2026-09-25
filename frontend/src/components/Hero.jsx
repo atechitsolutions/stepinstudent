@@ -1,3 +1,4 @@
+
 import { motion } from "framer-motion";
 import { ArrowRight, ArrowDown } from "lucide-react";
 
@@ -46,7 +47,7 @@ export default function Hero() {
                             delay: 0.08,
                         }}
                     >
-                        Digital Solutions{" "}
+                        Website Development Company{" "}
                         <em>Built Around</em>{" "}
                         Your Business.
                     </motion.h1>
@@ -65,10 +66,10 @@ export default function Hero() {
                             delay: 0.18,
                         }}
                     >
-                        From websites and web applications to custom
-                        software and digital growth solutions, A-Tech
-                        helps businesses turn ideas into practical
-                        digital products.
+                        A-Tech is a website development company in India
+                        providing custom website development, web applications,
+                        e-commerce, custom software and digital solutions for
+                        businesses.
                     </motion.p>
 
                     <motion.div
@@ -87,19 +88,27 @@ export default function Hero() {
                         className="hero-actions"
                     >
                         <button
+                            type="button"
                             className="btn btn-primary"
                             onClick={() => go("contact")}
                         >
                             Start Your Project
-                            <ArrowRight size={18} />
+                            <ArrowRight
+                                size={18}
+                                aria-hidden="true"
+                            />
                         </button>
 
                         <button
+                            type="button"
                             className="btn btn-secondary"
                             onClick={() => go("solutions")}
                         >
                             Explore Solutions
-                            <ArrowDown size={17} />
+                            <ArrowDown
+                                size={17}
+                                aria-hidden="true"
+                            />
                         </button>
                     </motion.div>
                 </div>
@@ -124,7 +133,7 @@ export default function Hero() {
                 >
                     <img
                         src="/images/atech-hero.png"
-                        alt="A-Tech digital solutions dashboard"
+                        alt="A-Tech website development and digital solutions"
                         className="hero-image"
                     />
                 </motion.div>

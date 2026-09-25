@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from 'react';
 import { Menu, X, ArrowUpRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
@@ -62,6 +63,7 @@ export default function Navbar() {
 
         {/* LOGO */}
         <button
+          type="button"
           className="brand"
           onClick={() => go('home')}
           aria-label="A-Tech home"
@@ -76,6 +78,7 @@ export default function Navbar() {
         >
           {links.map(([label, id]) => (
             <button
+              type="button"
               key={id}
               onClick={() => go(id)}
             >
@@ -83,50 +86,64 @@ export default function Navbar() {
             </button>
           ))}
 
-      {/* ADMIN - AFTER CONTACT */}
-                      <button
-                        className="nav-admin"
-                        onClick={goToAdmin}
-                      >
-                        Admin
-                        <ArrowUpRight size={16} />
-                      </button>
+          {/* ADMIN - AFTER CONTACT */}
+          <button
+            type="button"
+            className="nav-admin"
+            onClick={goToAdmin}
+          >
+            Admin
+            <ArrowUpRight
+              size={16}
+              aria-hidden="true"
+            />
+          </button>
         </nav>
-
-
 
         {/* GET A QUOTE */}
         <button
+          type="button"
           className="nav-cta"
           onClick={() => go('contact')}
         >
           Get a Quote
-          <ArrowUpRight size={16} />
+          <ArrowUpRight
+            size={16}
+            aria-hidden="true"
+          />
         </button>
-
 
         {/* MOBILE MENU BUTTON */}
         <button
+          type="button"
           className="menu-btn"
           aria-label={
             open ? 'Close menu' : 'Open menu'
           }
           aria-expanded={open}
+          aria-controls="mobile-navigation"
           onClick={() => setOpen(!open)}
         >
-          {open ? <X /> : <Menu />}
+          {open ? (
+            <X aria-hidden="true" />
+          ) : (
+            <Menu aria-hidden="true" />
+          )}
         </button>
       </div>
 
       {/* MOBILE MENU */}
       {open && (
         <div className="mobile-menu">
-          <nav aria-label="Mobile navigation">
-
+          <nav
+            id="mobile-navigation"
+            aria-label="Mobile navigation"
+          >
             {links
               .filter((x) => x[0] !== 'About')
               .map(([label, id]) => (
                 <button
+                  type="button"
                   key={id}
                   onClick={() => go(id)}
                 >
@@ -136,22 +153,29 @@ export default function Navbar() {
 
             {/* MOBILE ADMIN */}
             <button
+              type="button"
               className="mobile-admin"
               onClick={goToAdmin}
             >
               Admin
-              <ArrowUpRight size={17} />
+              <ArrowUpRight
+                size={17}
+                aria-hidden="true"
+              />
             </button>
 
             {/* MOBILE CTA */}
             <button
+              type="button"
               className="mobile-cta"
               onClick={() => go('contact')}
             >
               Start a Project
-              <ArrowUpRight size={17} />
+              <ArrowUpRight
+                size={17}
+                aria-hidden="true"
+              />
             </button>
-
           </nav>
         </div>
       )}

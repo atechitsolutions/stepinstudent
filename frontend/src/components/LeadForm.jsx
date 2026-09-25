@@ -236,7 +236,7 @@ export default function LeadForm({ selectedServices = [] }) {
 
                         <span>
                             <Phone size={17} />
-                            +919772733319
+                            +919799688845
                         </span>
 
                         <span>

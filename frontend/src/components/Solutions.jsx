@@ -39,15 +39,16 @@ export default function Solutions()  {
             </li>)
         }
         </ul>
-<button onClick= {
-            go
-        }
-        > {
+
+<button
+    type="button"
+    onClick={go}
+>{
             cta
         }
-        <ArrowUpRight size= {
-            16
-        }
+        <ArrowUpRight
+            size={16}
+            aria-hidden="true"
         />
 </button>
 </article>)

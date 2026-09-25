@@ -14,11 +14,11 @@ export default function ServiceCard( {
         service.number
     }
     </span>
-<span className="service-icon">
-<Icon size= {
-        21
-    }
-    />
+<span
+    className="service-icon"
+    aria-hidden="true"
+>
+    <Icon size={21} />
 </span>
 </div>
 <h3> {

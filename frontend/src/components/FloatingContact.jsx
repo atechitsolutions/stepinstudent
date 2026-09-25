@@ -23,7 +23,7 @@ export default function FloatingContact() {
 
       {/* WHATSAPP */}
       <a
-        href="https://wa.me/919772733319"
+        href="https://wa.me/919799688845"
         target="_blank"
         rel="noopener noreferrer"
         className="floating-contact-btn whatsapp-btn"

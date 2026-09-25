@@ -9,11 +9,14 @@ export default function ProjectCard({ project }) {
 
         <div className="project-window">
           {project.image ? (
-            <img
-              src={project.image}
-              alt={`${project.title} project preview`}
-              className="project-image"
-            />
+              <img
+                src={project.image}
+                alt={`${project.title} project preview`}
+                className="project-image"
+                loading="lazy"
+                decoding="async"
+              />
+
           ) : (
             <>
               <div className="mini-top" />

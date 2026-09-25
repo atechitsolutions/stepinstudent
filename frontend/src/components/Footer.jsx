@@ -11,10 +11,13 @@ export default function Footer()  {
 <div className="container">
 <div className="footer-grid">
 <div>
-<button className="brand footer-brand" onClick= {
-        () => go('home')
-    }
+    <button
+      type="button"
+      className="brand footer-brand"
+      onClick={() => go('home')}
+      aria-label="A-Tech home"
     >
+
 <span>A</span>-TECH</button>
 <p>Technology solutions built around your business.</p>
 <p className="footer-description">
@@ -51,7 +54,7 @@ export default function Footer()  {
 <div>
 <h4>Contact</h4>
 <span>ashasvitech@gmail.com</span>
-<span>+919772733319</span>
+<span>+919799688845</span>
 <span>Plot No E-90,
       eden garden ,sikar road , Rajawas, jaipur , rajeshtan, India 302013</span>
       <span>Plot no - 1,2
